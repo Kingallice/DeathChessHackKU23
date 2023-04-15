@@ -14,6 +14,10 @@ class ChessManager:
         if (self.board.fullmove_number % 2 == 0):
             return chess.BLACK
         return chess.WHITE
+
+    def get_board(self):
+        """get the board state of all pieces"""
+        return self.board
     
     def getPieces(self, color=None):
         pieceArr = []
