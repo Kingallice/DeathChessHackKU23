@@ -49,21 +49,18 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_RIGHT]:
             self.rect.x += self.speed
 
-        if keys[pygame.K_DOWN]:
-            pass
-
         if keys[pygame.K_LEFT]:
             self.rect.x += -self.speed
 
-        if keys[pygame.K_l] and keys[pygame.K_RIGHT] and self.attacking == False:
+        if keys[pygame.K_l] and keys[pygame.K_RIGHT]:
             self.attack_r(self.sur)
 
 
-        if keys[pygame.K_l] and keys[pygame.K_LEFT] and self.attacking == False:
+        if keys[pygame.K_l] and keys[pygame.K_LEFT]:
             self.attack_l(self.sur)
 
 
-        if keys[pygame.K_l] and self.attacking == False:
+        if keys[pygame.K_l]:
             self.attack_u(self.sur)
 
     def player_gravity(self):
@@ -83,7 +80,7 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(surface, (255,255,255), attacking_rect)
 
     def attack_r(self, surface):
-        attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y, self.rect.width, self.rect.height)
+        attacking_rect = pygame.Rect(self.rect.centerx , self.rect.y, self.rect.width, self.rect.height)
         pygame.draw.rect(surface, (255,255,255), attacking_rect)
 
     def attack_l(self,surface):
