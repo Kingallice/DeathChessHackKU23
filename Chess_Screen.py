@@ -8,7 +8,6 @@ import sys
 from Chess.chessManager import ChessManager
 
 board = ChessManager()
-print(board.getFen())
 bg_color = (0,0,255) #blue
 window = pg.display.set_mode()
 pg.display.set_caption("DEATH CHESS")
@@ -16,6 +15,7 @@ pg.display.update()
 pg.display.flip()
 letters = ['a','b','c','d','e','f','g','h']
 numbers = ['8','7','6','5','4','3','2','1']
+move_list = []
 
 #black images
 background = pg.image.load("board.png")
@@ -89,16 +89,42 @@ def update_board(board):
             window.blit(KnightW, (x,y))
         x += 100
 
+def clicked_highlighted_square():
+    if not move_list:
+        return
+    first = move_list[-1]
+    xcord = 360
+    ycord = 0
+    for letter in letters:
+        if first[0] == letter:
+            break
+        xcord += 100
+
+    for num in numbers:
+        if first[1] == num:
+            break
+        ycord += 103.5
+
+    square2 = pg.Surface((100, 103), pg.SRCALPHA)
+    square2.fill((255, 255, 0, 75))
+    window.blit(square2, (xcord, ycord))
+
+
+
+
 def move(uciMove):
-    board.pushMove(uciMove)
+    if board.isLegalMove(uciMove):
+        board.pushMove(uciMove)
 
 move("b1c3")
+
 
 while True:
     window.fill(bg_color)
     window.blit(background, (window.get_width()/4,0))
     update_board(board)
     highlight_square()
+    clicked_highlighted_square()
     pg.display.update()
     pg.display.flip()
 
@@ -108,6 +134,7 @@ while True:
             sys.exit()
         elif event.type == pg.MOUSEBUTTONUP: #event to get square/piece coordinates
             clicked_pos = pg.mouse.get_pos()
+            print(clicked_pos)
             uciMove = ''
 
             #records the letter rank of clicked square
@@ -124,4 +151,6 @@ while True:
                         uciMove += numbers[y-1]
                         break
 
-            print(uciMove)
+
+            move_list.append(uciMove)
+
