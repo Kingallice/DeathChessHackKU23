@@ -7,7 +7,6 @@ import pygame as pg
 import sys
 import json
 from Chess.chessManager import ChessManager
-import chess
 
 settings = json.loads(open("./Config/settings.dat", "r").read())
 
@@ -55,7 +54,13 @@ def highlight_square():
                     square = pg.Surface((100,103 + increase), pg.SRCALPHA)
                     square.fill((255,255,0,75))
                     window.blit(square,(x,y))
-
+"""trying to get pawn promotion square highlight
+    if pos[0] > window.get_width()/4 - 255 and pos[0] < window.get_width()/4 -155:
+        if pos[1] > window.get_height()/2 and pos[1] < window.get_height()/2 - 103.5:
+            square = pg.Surface((100, 103.5), pg.SRCALPHA)
+            square.fill((255, 255, 0, 75))
+            window.blit(square, (window.get_width()/4 - 255, window.get_height()/2))
+"""
 #updates the pieces on the board
 def update_board(board):
     state = board.getFen()
@@ -126,6 +131,14 @@ def clicked_highlighted_square():
         move(move_list[-2] + move_list[-1])
         move_list.clear()
 
+def promotion_choice():
+    square3 = pg.Surface((200,206.5))
+    square3.fill((255, 255, 255, 75))
+    window.blit(square3, (window.get_width()/4 - 225,window.get_height()/2))
+    window.blit(QueenW,(window.get_width()/4 - 225, window.get_height()/2))
+    window.blit(RookW, (window.get_width() / 4 - 125, window.get_height() / 2))
+    window.blit(BishopW, (window.get_width() / 4 - 225, window.get_height() / 2 + 103.5))
+    window.blit(KnightW, (window.get_width() / 4 - 125, window.get_height() / 2 + 103.5))
 
 
 #Makes only valid moves for player
@@ -140,6 +153,7 @@ while True:
     update_board(board)
     highlight_square()
     clicked_highlighted_square()
+    promotion_choice()
     pg.display.update()
     pg.display.flip()
 
