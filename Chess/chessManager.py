@@ -5,7 +5,7 @@ class ChessManager:
         """Initialized the ChessManager."""
         if fen:
             self.board = chess.Board(fen)
-        else
+        else:
             self.board = chess.Board()
 
     def getFen(self):
