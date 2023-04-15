@@ -12,8 +12,34 @@ class ChessManager:
     def getTurn(self):
         """Get current player turn of the board."""
         if (self.board.fullmove_number % 2 == 0):
-            return "BLACK"
-        return "WHITE"
+            return chess.BLACK
+        return chess.WHITE
+    
+    def getPieces(self, color=None):
+        pieceArr = []
+        if color == chess.WHITE:
+            for x in self.board.board_fen():
+                if x.isupper():
+                    pieceArr.append(x)
+        elif color == chess.BLACK:
+            for x in self.board.board_fen():
+                if x.islower():
+                    pieceArr.append(x)
+
+    def getPieceType(self, pieceChar):
+        pieceChar = pieceChar.lower()
+        if pieceChar == "k":
+            return chess.KING
+        elif pieceChar == "q":
+            return chess.QUEEN
+        elif pieceChar == "r":
+            return chess.ROOK
+        elif pieceChar == "b":
+            return chess.BISHOP
+        elif pieceChar == "n":
+            return chess.KNIGHT
+        elif pieceChar == "p":
+            return chess.PAWN
     
     def isLegalMove(self, uciMove=None):
         """Return True if passed move is legal."""
