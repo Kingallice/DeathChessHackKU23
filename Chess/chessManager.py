@@ -25,6 +25,7 @@ class ChessManager:
             for x in self.board.board_fen():
                 if x.islower():
                     pieceArr.append(x)
+        return pieceArr
 
     def getPieceType(self, pieceChar):
         pieceChar = pieceChar.lower()
