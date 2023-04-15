@@ -8,6 +8,10 @@ clock = pygame.time.Clock()
 p1_health = 595
 p2_health = 685
 
+p1_movement = 30
+
+ground = 595
+
 timer_font = pygame.font.Font(None, 50) #None is the font of the text
 screen.fill('White')
 
@@ -22,6 +26,7 @@ time_rect = timer.get_rect(center = (640,50))
 
 player_1_surface = pygame.image.load("Images/Pieces/Chiss.png").convert_alpha()
 player_1_rect = player_1_surface.get_rect(topleft = (100,475))
+player_gravity = 0
 
 while True:
     for event in pygame.event.get():
@@ -29,9 +34,22 @@ while True:
             pygame.quit()
             exit()
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_w and player_1_rect.bottom >= ground:
+                player_gravity = -20
+
+            if event.key == pygame.K_a:
+                player_1_rect.x += -p1_movement
+
+            if event.key == pygame.K_s:
+                print("help")
+
+            if event.key == pygame.K_d:
+                player_1_rect.x += p1_movement
+
+
     screen.blit(background,(0,0))   #layer 1. Draw most bottom layer first. The sky
                                     #layer 2. The ground
-
 
     #Draws the background of line
     pygame.draw.line(screen,"Cyan",(50,50), (600,50), width = 50)
@@ -43,18 +61,32 @@ while True:
 
     p1_health -= 1
     p2_health += 1
-
     #pygame.draw.line(screen,"White",(100,50))
 
 
 
     screen.blit(timer,time_rect)
 
+    player_gravity += 1
+    player_1_rect.y += player_gravity
+
+    if player_1_rect.bottom >= ground: player_1_rect.bottom = ground
+
     screen.blit(player_1_surface,player_1_rect)
 
 
     #rect1.colliderrect(rect2) Checks for collision between two rectangles
     #rect1.colliderpoint((x,y)) Checks for a collision at one specific point
+
+
+
+
+
+
+
+
+
+
 
 
 
