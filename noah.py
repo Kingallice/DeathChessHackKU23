@@ -76,12 +76,11 @@ while running:
                             btnYStart - btn.get_rect().height/2 + i*(btn.get_rect().height + btnPadding), 
                             btn.get_rect().width,
                             btn.get_rect().height).collidepoint(mosPos[0], mosPos[1]):
-                    match btnMenuText[i]:
-                        case "Start":
+                    if btnMenuText[i] =="Start":
                             print("Game Start")
-                        case "Settings":
+                    elif btnMenuText[i] == "Settings":
                             settingMenu = True
-                        case "Exit":
+                    elif btnMenuText[i] == "Exit":
                             running = False
                     break
 
