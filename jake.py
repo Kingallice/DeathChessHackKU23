@@ -16,13 +16,11 @@ pygame.init()
 screen = pygame.display.set_mode((1280,720))
 clock = pygame.time.Clock()
 
-p1 = PlayerController.Player("Images/Pieces/CHiss.png",20,100,475,0,-20)
-p2 = PlayerController.Player("Images/Pieces/Pwned.png",20,1100,475,0,-20)
-
+p1 = PlayerController.Player("Images/Pieces/CHiss.png",20,100,475,0,-20,screen)
+p2 = PlayerController.Player("Images/Pieces/Pwned.png",20,1100,475,0,-20,screen)
 
 p1_health = 595
 p2_health = 685
-
 
 timer_font = pygame.font.Font(None, 60) #None is the font of the text
 screen.fill('White')
@@ -34,9 +32,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-
-        p1.player_input()
-        p2.player_input2()
 
         """if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w and player_1_rect.bottom >= ground:
@@ -72,8 +67,12 @@ while True:
 
     screen.blit(timer,time_rect)
 
+    p1.player_input()
+    p2.player_input2()
+
     p1.check_l_e()
     p2.check_l_e()
+
 
     p1.player_gravity()
     p2.player_gravity()
