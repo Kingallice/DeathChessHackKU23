@@ -14,6 +14,5 @@ while True:
             sys.exit()
     window.fill(bg_color)
     window.blit(background, (window.get_width()/4,0))
-    print( background.get_rect())
     pg.display.update()
     pg.display.flip()
