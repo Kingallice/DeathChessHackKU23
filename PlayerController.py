@@ -11,6 +11,10 @@ class Player(pygame.sprite.Sprite):
         self.dx = 0
         self.dy = 0
         self.sur = sur
+        self.health = 10
+        self.attack = 20
+
+
 
     def player_input(self):
         keys = pygame.key.get_pressed()
@@ -56,5 +60,5 @@ class Player(pygame.sprite.Sprite):
             self.rect.x = 2500 - self.rect.right
 
     def attack(self, surface):
-        attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y, self.rect.width, self.rect.height)
+        attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y, self.rect.width, self.rect.height / 2)
         pygame.draw.rect(surface, (255,255,255), attacking_rect)
