@@ -67,6 +67,12 @@ class ChessManager:
         """Removes the last move from the board."""
         return self.board.move_stack.pop()
     
+    def isOccupied(self, location):
+        """Return True if a piece is at location, else False"""
+        if self.board.piece_at(chess.parse_square(location)):
+            return True
+        return False
+
     def removePiece(self, location):
         """Removes and returns piece at uci location passed"""
         return self.board.remove_piece_at(chess.parse_square(location))
