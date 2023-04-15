@@ -25,5 +25,8 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_a]:
             self.rect.x += -self.speed
 
-
+    def player_gravity(self):
+        self.gravity += 1
+        self.rect.y += self.gravity
+        if self.rect.bottom >= self.ground: self.rect.bottom = self.ground
 

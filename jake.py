@@ -7,6 +7,7 @@ screen = pygame.display.set_mode((1280,720))
 clock = pygame.time.Clock()
 
 p1 = PlayerController.Player("Images/Pieces/CHiss.png",30,100,475,0,-20)
+p2 = PlayerController.Player("Images/Pieces/Pwned.png",30,1100,475,0,-20)
 
 
 p1_health = 595
@@ -66,12 +67,11 @@ while True:
 
     screen.blit(timer,time_rect)
 
-    p1.gravity += 1
-    p1.rect.y += p1.gravity
-
-    if p1.rect.bottom >= p1.ground: p1.rect.bottom = p1.ground
+    p1.player_gravity()
+    p2.player_gravity()
 
     screen.blit(p1.image,p1.rect)
+    screen.blit(p2.image,p2.rect)
 
 
     #rect1.colliderrect(rect2) Checks for collision between two rectangles
