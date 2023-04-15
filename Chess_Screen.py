@@ -14,7 +14,7 @@ pg.display.set_caption("DEATH CHESS")
 pg.display.update()
 pg.display.flip()
 letters = ['a','b','c','d','e','f','g','h']
-numbers = ['1','2','3','4','5','6','7','8']
+numbers = ['8','7','6','5','4','3','2','1']
 
 #black images
 background = pg.image.load("board.png")
@@ -90,7 +90,7 @@ def update_board(board):
 
 def move(uciMove):
     board.pushMove(uciMove)
-
+move("e2e4")
 
 while True:
     window.fill(bg_color)
@@ -106,9 +106,18 @@ while True:
             sys.exit()
         elif event.type == pg.MOUSEBUTTONUP: #event to get square/piece coordinates
             clicked_pos = pg.mouse.get_pos()
-            for x in range(8):
-                for y in range(8):
-                    if clicked_pos < window.get_width()/4 + 800 and clicked_pos > window.get_width()/4:
-                        if clicked_pos < 1160 and clicked_pos > 0:
-                            pass
+            uciMove = ''
 
+            for x in range(1,9):
+                if clicked_pos[0] > window.get_width() / 4 and clicked_pos[0] < window.get_width() /4 + x * 100:
+                    if clicked_pos[1] < 828 and clicked_pos[1] > 0:
+                        uciMove += letters[x-1]
+                        break
+
+            for y in range(1,9):
+                if clicked_pos[0] < window.get_width() / 4 + 800 and clicked_pos[0] > window.get_width() / 4:
+                    if clicked_pos[1] > 0 and clicked_pos[1] < y * 103.5:
+                        uciMove += numbers[y-1]
+                        break
+
+            print(uciMove)
