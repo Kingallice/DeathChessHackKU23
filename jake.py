@@ -46,7 +46,6 @@ while True:
             if event.key == pygame.K_d:
                 player_1_rect.x += p1_movement"""
 
-
     timer = timer_font.render(str(display_time()), True, 'Green')
     time_rect = timer.get_rect(center=(640, 100))
 
