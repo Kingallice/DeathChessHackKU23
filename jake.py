@@ -1,6 +1,7 @@
 import pygame
 import PlayerController
 from sys import exit
+import Piece
 
 test = 0
 start_time = 92000
@@ -21,8 +22,33 @@ pygame.init()
 screen = pygame.display.set_mode((1280,720))
 clock = pygame.time.Clock()
 
-p1 = PlayerController.Player("Images/Pieces/rookB.svg",20,100,475,0,-20,screen)
-p2 = PlayerController.Player("Images/Pieces/pawnW.svg",20,1100,475,0,-20,screen)
+piece1 = "Wpawn"
+piece2 = 'Bqueen'
+pieceList = Piece.piece_stats[piece1]
+image = pieceList[0]
+speed = pieceList[1]
+posx= pieceList[2]
+posy=pieceList[3]
+gravity=pieceList[4]
+df=pieceList[5]
+sur=pieceList[6]
+health=pieceList[7]
+attack =pieceList[8]
+
+p1 = PlayerController.Player(image, speed, posx, posy, gravity, df, sur, health, attack)
+
+pieceList = Piece.piece_stats[piece2]
+image = pieceList[0]
+speed = pieceList[1]
+posx= pieceList[2]
+posy=pieceList[3]
+gravity=pieceList[4]
+df=pieceList[5]
+sur=pieceList[6]
+health=pieceList[7]
+attack =pieceList[8]
+
+p2 = PlayerController.Player(image, speed, posx, posy, gravity, df, sur, health, attack)
 
 
 timer_font = pygame.font.Font(None, 60) #None is the font of the text
