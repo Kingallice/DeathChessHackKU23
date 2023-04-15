@@ -11,7 +11,7 @@ from Chess.chessManager import ChessManager
 settings = json.loads(open("./Config/settings.dat", "r").read())
 
 board = ChessManager()
-bg_color = (0,0,255) #blue
+bg_color = (0,0,0) #black
 window = pg.display.set_mode(settings["currResolution"])
 if settings["fullscreen"]:
     window = pg.display.set_mode((0,0), pg.FULLSCREEN)
