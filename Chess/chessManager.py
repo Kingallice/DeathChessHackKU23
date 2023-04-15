@@ -1,9 +1,12 @@
 import chess
 
 class ChessManager:
-    def __init__(self) -> None:
+    def __init__(self, fen=None) -> None:
         """Initialized the ChessManager."""
-        self.board = chess.Board()
+        if fen:
+            self.board = chess.Board(fen)
+        else
+            self.board = chess.Board()
 
     def getFen(self):
         """Returns the fen of the board."""
