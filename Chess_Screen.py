@@ -48,6 +48,7 @@ def highlight_square():
                     square.fill((255,255,0,75))
                     window.blit(square,(x,y))
 
+#updates the pieces on the board
 def update_board(board):
     state = board.getFen()
     x = window.get_width()//4
@@ -89,6 +90,7 @@ def update_board(board):
             window.blit(KnightW, (x,y))
         x += 100
 
+#highlights currently clicked on square
 def clicked_highlighted_square():
     if not move_list:
         return
@@ -115,11 +117,12 @@ def clicked_highlighted_square():
 
 
 
-
+#Makes only valid moves for player
 def move(uciMove):
     if board.isLegalMove(uciMove):
         board.pushMove(uciMove)
 
+#runs the game
 while True:
     window.fill(bg_color)
     window.blit(background, (window.get_width()/4,0))
