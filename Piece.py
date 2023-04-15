@@ -2,7 +2,7 @@ import pygame as pg
 import chess
 
 #AUTHOR _ GUY WHO IS INSANE
-class piece(pg.sprite):
+class Piece(pg.sprite):
     def __init__(self, team, type, movement, image, location):
         self.type = type
         self.movement = movement
@@ -19,6 +19,11 @@ class piece(pg.sprite):
     def minigame(self, capturing_piece, captured_piece):
         pass
 
-    def remove_piece(self,):
+    def set_loc(self):
+        self.location = -1000
+    def remove_piece(self):
+        self.piece
+
+
 
 bp = piece("b", "p", 0, 0, 0)
