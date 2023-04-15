@@ -55,8 +55,8 @@ while running:
                             btn.get_rect().width,
                             btn.get_rect().height).collidepoint(mosPos[0], mosPos[1]):
                     if btnSettingsText[i] == "Display":
-                        settings["displayNum"] = (settings["displayNum"]+1)%pygame.display.get_num_displays()
-                        screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN, display=settings["displayNum"])
+                        print(settings["displayNum"])
+                        screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
                     elif btnSettingsText[i] == "Fullscreen":
                         settings["fullscreen"] = not pygame.display.is_fullscreen()
                         if settings["fullscreen"]:
