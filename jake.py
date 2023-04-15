@@ -73,7 +73,6 @@ while True:
     p1.check_l_e()
     p2.check_l_e()
 
-
     p1.player_gravity()
     p2.player_gravity()
 
