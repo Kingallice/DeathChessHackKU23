@@ -12,14 +12,11 @@ p1 = PlayerController.Player("Images/Pieces/CHiss.png",30,100,475,0,-20)
 p1_health = 595
 p2_health = 685
 
-p1_movement = 30
-
-ground = 595
 
 timer_font = pygame.font.Font(None, 50) #None is the font of the text
 screen.fill('White')
 
-background = pygame.image.load("Images/BackGround/Background.png").convert()
+Meadow = pygame.image.load("Images/BackGround/Background.png").convert()
 
 
 
@@ -50,7 +47,7 @@ while True:
                 player_1_rect.x += p1_movement"""
 
 
-    screen.blit(background,(0,0))   #layer 1. Draw most bottom layer first. The sky
+    screen.blit(Meadow,(0,0))   #layer 1. Draw most bottom layer first. The sky
                                     #layer 2. The ground
 
     #Draws the background of line
@@ -72,7 +69,7 @@ while True:
     p1.gravity += 1
     p1.rect.y += p1.gravity
 
-    if p1.rect.bottom >= ground: p1.rect.bottom = ground
+    if p1.rect.bottom >= p1.ground: p1.rect.bottom = p1.ground
 
     screen.blit(p1.image,p1.rect)
 
