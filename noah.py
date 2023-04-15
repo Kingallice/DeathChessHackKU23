@@ -54,20 +54,19 @@ while running:
                             btnYStart - btn.get_rect().height/2 + i*(btn.get_rect().height + btnPadding), 
                             btn.get_rect().width,
                             btn.get_rect().height).collidepoint(mosPos[0], mosPos[1]):
-                    match btnSettingsText[i]:
-                        case "Display":
-                            settings["displayNum"] = (settings["displayNum"]+1)%pygame.display.get_num_displays()
-                            screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN, display=settings["displayNum"])
-                        case "Fullscreen":
-                            settings["fullscreen"] = not pygame.display.is_fullscreen()
-                            if settings["fullscreen"]:
-                                screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
-                            else:
-                                screen = pygame.display.set_mode(settings["currResolution"])
-                        case "Back":
-                            settingMenu = False
-                            settingsFile = open("./Config/settings.dat", 'w+')
-                            json.dump(settings, settingsFile)
+                    if btnSettingsText[i] == "Display":
+                        settings["displayNum"] = (settings["displayNum"]+1)%pygame.display.get_num_displays()
+                        screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN, display=settings["displayNum"])
+                    elif btnSettingsText[i] == "Fullscreen":
+                        settings["fullscreen"] = not pygame.display.is_fullscreen()
+                        if settings["fullscreen"]:
+                            screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+                        else:
+                            screen = pygame.display.set_mode(settings["currResolution"])
+                    elif btnSettingsText[i] == "Back":
+                        settingMenu = False
+                        settingsFile = open("./Config/settings.dat", 'w+')
+                        json.dump(settings, settingsFile)
                     break
         elif not settingMenu and event.type == pygame.MOUSEBUTTONDOWN:
             for i in range(len(btnArr)):
