@@ -22,8 +22,8 @@ class Piece(pg.sprite):
     def set_loc(self):
         self.location = -1000
     def remove_piece(self):
-        self.piece
+        pass
 
 
 
-bp = piece("b", "p", 0, 0, 0)
+bp = Piece("b", "p", 0, 0, 0)
