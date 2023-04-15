@@ -104,10 +104,10 @@ def clicked_highlighted_square():
         if first[1] == num:
             break
         ycord += 103.5
-
-    square2 = pg.Surface((100, 103), pg.SRCALPHA)
-    square2.fill((255, 255, 0, 75))
-    window.blit(square2, (xcord, ycord))
+    if board.isOccupied(first[0]+first[1]):
+        square2 = pg.Surface((100, 103), pg.SRCALPHA)
+        square2.fill((255, 255, 0, 75))
+        window.blit(square2, (xcord, ycord))
 
 
 
