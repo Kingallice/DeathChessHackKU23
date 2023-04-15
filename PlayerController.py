@@ -30,16 +30,14 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_a]:
             self.rect.x += -self.speed
 
-        if keys[pygame.K_f] and keys[pygame.K_d] and self.attacking == False:
+        if keys[pygame.K_f] and keys[pygame.K_d] and not keys[pygame.K_a]:
             self.attack_r(self.sur)
 
-        if keys[pygame.K_f] and keys[pygame.K_a] and self.attacking == False:
+        if keys[pygame.K_f] and keys[pygame.K_a] and not keys[pygame.K_d]:
             self.attack_l(self.sur)
 
-
-        if keys[pygame.K_f] and self.attacking == False:
+        if keys[pygame.K_f] and not keys[pygame.K_a] and not keys[pygame.K_d]:
             self.attack_u(self.sur)
-
 
     def player_input2(self):
         keys = pygame.key.get_pressed()
@@ -52,15 +50,13 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT]:
             self.rect.x += -self.speed
 
-        if keys[pygame.K_l] and keys[pygame.K_RIGHT]:
+        if keys[pygame.K_l] and keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
             self.attack_r(self.sur)
 
-
-        if keys[pygame.K_l] and keys[pygame.K_LEFT]:
+        if keys[pygame.K_l] and keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
             self.attack_l(self.sur)
 
-
-        if keys[pygame.K_l]:
+        if keys[pygame.K_l] and not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
             self.attack_u(self.sur)
 
     def player_gravity(self):
