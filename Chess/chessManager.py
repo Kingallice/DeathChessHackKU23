@@ -52,7 +52,7 @@ class ChessManager:
     
     def isLegalMove(self, uciMove=None):
         """Return True if passed move is legal."""
-        if uciMove in self.board.generate_legal_moves():
+        if uciMove in (move.uci() for move in self.board.generate_legal_moves()):
             return True
         return False
     
@@ -74,3 +74,6 @@ class ChessManager:
     def setPiece(self, location, pieceChar, color):
         """Places a piece of pieceType for the passed char at uci location for passed color"""
         self.board.set_piece_at(chess.parse_square(location), chess.Piece(self.getPieceType(pieceChar), color))
+
+x = ChessManager()
+print(x.isLegalMove("a2a3"))
