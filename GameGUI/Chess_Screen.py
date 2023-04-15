@@ -5,11 +5,16 @@
 
 import pygame as pg
 import sys
+import json
 from Chess.chessManager import ChessManager
 
+settings = json.loads(open("./Config/settings.dat", "r").read())
+
 board = ChessManager()
-bg_color = (0,0,0) #black
-window = pg.display.set_mode()
+bg_color = (0,0,255) #blue
+window = pg.display.set_mode(settings["currResolution"])
+if settings["fullscreen"]:
+    window = pg.display.set_mode((0,0), pg.FULLSCREEN)
 pg.display.set_caption("DEATH CHESS")
 pg.display.update()
 pg.display.flip()
@@ -35,12 +40,14 @@ QueenW = pg.image.load("Images/Pieces/w_queen.png")
 KnightW = pg.image.load("Images/Pieces/Horse_Girl_White.png")
 PawnW = pg.image.load("Images/Pieces/Pwned_White.png")
 
+yStart = (window.get_height() - background.get_height())//2
+
 #highlights current square of mouse
 def highlight_square():
     pos = pg.mouse.get_pos()
     for x in range(window.get_width()//4,1160,100):
         increase = 0
-        for y in range(0,828,103):
+        for y in range(yStart,yStart+828,103):
             increase += 0.5
             if pos[0] > x and pos[0] < x + 100:
                 if pos[1] > y and pos[1] < y + 103 + increase:
@@ -52,7 +59,7 @@ def highlight_square():
 def update_board(board):
     state = board.getFen()
     x = window.get_width()//4
-    y = 0
+    y = yStart
     for piece in range(len(state)):
         if state[piece].isnumeric():
             x += (int(state[piece])-1)*100
@@ -95,8 +102,8 @@ def clicked_highlighted_square():
     if not move_list:
         return
     first = move_list[-1]
-    xcord = 360
-    ycord = 0
+    xcord = window.get_width()/4
+    ycord = yStart
     for letter in letters:
         if first[0] == letter:
             break
@@ -125,7 +132,7 @@ def move(uciMove):
 #runs the game
 while True:
     window.fill(bg_color)
-    window.blit(background, (window.get_width()/4,0))
+    window.blit(background, (window.get_width()/4,yStart))
     update_board(board)
     highlight_square()
     clicked_highlighted_square()
@@ -150,7 +157,7 @@ while True:
             # records the number rank of clicked square
             for y in range(1,9):
                 if clicked_pos[0] < window.get_width() / 4 + 800 and clicked_pos[0] > window.get_width() / 4:
-                    if clicked_pos[1] > 0 and clicked_pos[1] < y * 103.5:
+                    if clicked_pos[1] > 0 and clicked_pos[1] < yStart + (y * 103.5):
                         uciMove += numbers[y-1]
                         break
 

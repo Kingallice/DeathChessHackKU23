@@ -104,7 +104,6 @@ while running:
             btnArr.append(font.render(btnMenuText[i], True, "white", "black"))
             screen.blit(btnArr[i], (screen.get_rect().centerx - btnArr[i].get_rect().width/2, btnYStart - btnArr[i].get_rect().height/2 + i*(btnArr[i].get_rect().height + btnPadding)))
 
-
     pygame.display.flip()
 
     dt = clock.tick(60) / 1000
