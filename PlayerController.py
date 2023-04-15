@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.sur = sur
         self.health = 10
         self.a_p = 20
+        self.attacking = False
 
     def player_input(self):
         keys = pygame.key.get_pressed()
@@ -28,8 +29,17 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_a]:
             self.rect.x += -self.speed
 
-        if keys[pygame.K_f]:
-            self.attack(self.sur)
+        if keys[pygame.K_f] and keys[pygame.K_d] and self.attacking == False:
+            self.attack_r(self.sur)
+            self.attacking == True
+
+        if keys[pygame.K_f] and keys[pygame.K_a] and self.attacking == False:
+            self.attack_l(self.sur)
+            self.attacking == True
+
+        if keys[pygame.K_f] and self.attacking == False:
+            self.attack_u(self.sur)
+            self.attacking == True
 
     def player_input2(self):
         keys = pygame.key.get_pressed()
@@ -45,6 +55,18 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT]:
             self.rect.x += -self.speed
 
+        if keys[pygame.K_l] and keys[pygame.K_RIGHT] and self.attacking == False:
+            self.attack_r(self.sur)
+            self.attacking == True
+
+        if keys[pygame.K_l] and keys[pygame.K_LEFT] and self.attacking == False:
+            self.attack_l(self.sur)
+            self.attacking == True
+
+        if keys[pygame.K_l] and self.attacking == False:
+            self.attack_u(self.sur)
+            self.attacking == True
+
     def player_gravity(self):
         self.gravity += 1
         self.rect.y += self.gravity
@@ -57,6 +79,14 @@ class Player(pygame.sprite.Sprite):
         if self.rect.right + self.rect.x > 2500:
             self.rect.x = 2500 - self.rect.right
 
-    def attack(self, surface):
+    def attack_u(self, surface):
+        attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y - 50, 5, self.rect.height)
+        pygame.draw.rect(surface, (255,255,255), attacking_rect)
+
+    def attack_r(self, surface):
         attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y, self.rect.width, self.rect.height)
         pygame.draw.rect(surface, (255,255,255), attacking_rect)
+
+    def attack_l(self,surface):
+        attacking_rect = pygame.Rect(-self.rect.centerx, self.rect.y, self.rect.width, self.rect.height)
+        pygame.draw.rect(surface, (255, 255, 255), attacking_rect)
