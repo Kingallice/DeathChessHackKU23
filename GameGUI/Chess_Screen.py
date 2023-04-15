@@ -8,7 +8,7 @@ import sys
 from Chess.chessManager import ChessManager
 
 board = ChessManager()
-bg_color = (0,0,255) #blue
+bg_color = (0,0,0) #black
 window = pg.display.set_mode()
 pg.display.set_caption("DEATH CHESS")
 pg.display.update()
