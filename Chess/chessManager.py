@@ -66,3 +66,11 @@ class ChessManager:
     def revertMove(self):
         """Removes the last move from the board."""
         return self.board.move_stack.pop()
+    
+    def removePiece(self, location):
+        """Removes and returns piece at uci location passed"""
+        return self.board.remove_piece_at(chess.parse_square(location))
+    
+    def setPiece(self, location, pieceChar, color):
+        """Places a piece of pieceType for the passed char at uci location for passed color"""
+        self.board.set_piece_at(chess.parse_square(location), chess.Piece(self.getPieceType(pieceChar), color))
