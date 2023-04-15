@@ -109,15 +109,16 @@ def clicked_highlighted_square():
         square2.fill((255, 255, 0, 75))
         window.blit(square2, (xcord, ycord))
 
+    if len(move_list) == 2:
+        move(move_list[-2] + move_list[-1])
+        move_list.clear()
+
 
 
 
 def move(uciMove):
     if board.isLegalMove(uciMove):
         board.pushMove(uciMove)
-
-move("b1c3")
-
 
 while True:
     window.fill(bg_color)
@@ -134,7 +135,6 @@ while True:
             sys.exit()
         elif event.type == pg.MOUSEBUTTONUP: #event to get square/piece coordinates
             clicked_pos = pg.mouse.get_pos()
-            print(clicked_pos)
             uciMove = ''
 
             #records the letter rank of clicked square
