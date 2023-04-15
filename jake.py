@@ -1,9 +1,13 @@
 import pygame
+import PlayerController
 from sys import exit
 
 pygame.init()
 screen = pygame.display.set_mode((1280,720))
 clock = pygame.time.Clock()
+
+p1 = PlayerController.Player("Images/Pieces/CHiss.png",30,100,475,0,-20)
+
 
 p1_health = 595
 p2_health = 685
@@ -16,7 +20,7 @@ timer_font = pygame.font.Font(None, 50) #None is the font of the text
 screen.fill('White')
 
 background = pygame.image.load("Images/BackGround/Background.png").convert()
-rook = pygame.image.load("Images/Pieces/CHiss.png").convert_alpha()
+
 
 
 
@@ -24,17 +28,15 @@ timer = timer_font.render('1:32', True, 'Green')
 time_rect = timer.get_rect(center = (640,50))
 
 
-player_1_surface = pygame.image.load("Images/Pieces/Chiss.png").convert_alpha()
-player_1_rect = player_1_surface.get_rect(topleft = (100,475))
-player_gravity = 0
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
 
-        if event.type == pygame.KEYDOWN:
+        p1.player_input()
+
+        """if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w and player_1_rect.bottom >= ground:
                 player_gravity = -20
 
@@ -45,7 +47,7 @@ while True:
                 print("help")
 
             if event.key == pygame.K_d:
-                player_1_rect.x += p1_movement
+                player_1_rect.x += p1_movement"""
 
 
     screen.blit(background,(0,0))   #layer 1. Draw most bottom layer first. The sky
@@ -67,12 +69,12 @@ while True:
 
     screen.blit(timer,time_rect)
 
-    player_gravity += 1
-    player_1_rect.y += player_gravity
+    p1.gravity += 1
+    p1.rect.y += p1.gravity
 
-    if player_1_rect.bottom >= ground: player_1_rect.bottom = ground
+    if p1.rect.bottom >= ground: p1.rect.bottom = ground
 
-    screen.blit(player_1_surface,player_1_rect)
+    screen.blit(p1.image,p1.rect)
 
 
     #rect1.colliderrect(rect2) Checks for collision between two rectangles
