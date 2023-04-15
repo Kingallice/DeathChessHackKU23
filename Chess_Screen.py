@@ -8,6 +8,7 @@ import sys
 from Chess.chessManager import ChessManager
 
 board = ChessManager()
+print(board.getFen())
 bg_color = (0,0,255) #blue
 window = pg.display.set_mode()
 pg.display.set_caption("DEATH CHESS")
@@ -90,7 +91,8 @@ def update_board(board):
 
 def move(uciMove):
     board.pushMove(uciMove)
-move("e2e4")
+
+move("b1c3")
 
 while True:
     window.fill(bg_color)
@@ -108,12 +110,14 @@ while True:
             clicked_pos = pg.mouse.get_pos()
             uciMove = ''
 
+            #records the letter rank of clicked square
             for x in range(1,9):
                 if clicked_pos[0] > window.get_width() / 4 and clicked_pos[0] < window.get_width() /4 + x * 100:
                     if clicked_pos[1] < 828 and clicked_pos[1] > 0:
                         uciMove += letters[x-1]
                         break
 
+            # records the number rank of clicked square
             for y in range(1,9):
                 if clicked_pos[0] < window.get_width() / 4 + 800 and clicked_pos[0] > window.get_width() / 4:
                     if clicked_pos[1] > 0 and clicked_pos[1] < y * 103.5:
