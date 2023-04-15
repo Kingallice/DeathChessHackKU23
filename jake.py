@@ -64,7 +64,6 @@ while True:
         p1_health -= 1
         p2_health += 1
 
-
     screen.blit(timer,time_rect)
 
     p1.player_input()
