@@ -92,7 +92,7 @@ while True:
 
     #Draws the actual Health Bar
     pygame.draw.line(screen, "Red", (55, 50), (p1.health, 50), width=40)
-    pygame.draw.line(screen, "Red", (p2.health, 50), (1225, 50), width=40)
+    pygame.draw.line(screen, "Red", (1225-p2.health, 50), (1225, 50), width=40)
 
 
     screen.blit(timer,time_rect)

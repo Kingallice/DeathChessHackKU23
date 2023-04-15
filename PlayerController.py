@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.sur = sur
         self.health = health
         self.a_p = a_p
-
+        self.max_health = health
 
     def player_input(self,target):
         keys = pygame.key.get_pressed()
