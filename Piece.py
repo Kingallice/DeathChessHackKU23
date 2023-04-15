@@ -1,36 +1,15 @@
 import pygame as pg
 import chess
-
-#AUTHOR _ GUY WHO IS INSANE
-class Piece(pg.sprite):
-    def __init__(self, team, image, x, y):
-        self.team = team
-        self.image = image
-        self.location = (x, y)
-
-    def capture(self, capturing_piece, captured_piece):
-        win_loss = self.minigame(capturing_piece, captured_piece)
-        if win_loss==True:
-            captured_piece.remove()
+#AUTHOR -Isaac Goff
 
 
-    def minigame(self, capturing_piece, captured_piece):
-        pass
-
-    def set_loc(self, newx, newy):
-        self.x = newx
-        self.y = newy
-    def remove_piece(self):
-        pass
-
-class Pawn(Piece):
-    def __init__(self, team, x, y, movement):
-        super.__init__(team, x, y)
-        self.movement = movement
-
-    def move(self, clickpointx, clickpointy, x, y):
-        if clickpointx == x and (clickpointy == y+103 or clickpointy == y+206):
-            self.set_loc(clickpointy, clickpointx)
-
-
-bp = Piece("b", "p", 0, 0, 0)
+# In order in the dict value: Imagefile, speed, posx, posy, gravity, df, sur
+piece_stats = {"Wpawn": ["Images/Pieces/Pwned_White.png",20,100,475,0,-20,screen],
+               "Bpawn": ["Images/Pieces/Pwned_Black.png",20,1100,475,0,-20,screen],
+                "Wrook":["Images/Pieces/w_rook.png", 15, 100, 475, 2, -20, screen],
+               "Brook": ["Images/Pieces/CHiss.png", 15, 1100, 475, 2, -20, screen],
+               "Wknight": ["Images/Pieces/Horse_Girl_White.png", 25, 100, 475, -1, -20, screen],
+               "Bknight": ["Images/Pieces/Horse_Girl_Black.png", 25, 1100, 475, -1, -20, screen],
+               "Wbishop": ["Images/Pieces/w_bishop.png", 20, 100, 475, -2, -20, screen],
+               "Bbishop": ["Images/Pieces/BishopB.png", 20, 1100, 475, -2, -20, screen],
+               ""}
