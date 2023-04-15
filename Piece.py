@@ -1,7 +1,7 @@
-import pygame as pg
 import chess
 #AUTHOR -Isaac Goff
 import pygame
+
 
 screen = pygame.display.set_mode((1280, 720))
 
