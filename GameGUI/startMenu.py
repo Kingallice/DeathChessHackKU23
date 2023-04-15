@@ -23,6 +23,7 @@ if len(settingsFileData) > 0:
     print("JSON", settings)
 else:
     json.dump(settings, settingsFile)
+settingsFile.close()
 
 font = pygame.font.SysFont('Arial', 90)
 
@@ -67,6 +68,7 @@ while running:
                         settingMenu = False
                         settingsFile = open("./Config/settings.dat", 'w+')
                         json.dump(settings, settingsFile)
+                        settingsFile.close()
                     break
         elif not settingMenu and event.type == pygame.MOUSEBUTTONDOWN:
             for i in range(len(btnArr)):
