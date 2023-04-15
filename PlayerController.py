@@ -11,6 +11,8 @@ class Player(pygame.sprite.Sprite):
         self.dx = 0
         self.dy = 0
         self.sur = sur
+        self.health = 10
+        self.a_p = 20
 
     def player_input(self):
         keys = pygame.key.get_pressed()
