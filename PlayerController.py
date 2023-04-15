@@ -2,7 +2,7 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self,image,speed,p_x,p_y,p_gravity,df,sur):
         super().__init__()
-        self.image = pygame.image.load(image).convert_alpha()
+        self.image = pygame.transform.smoothscale(pygame.image.load(image).convert_alpha(), (100, 100))
         self.rect = self.image.get_rect(topleft = (p_x,p_y))
         self.speed = speed
         self.ground = 595

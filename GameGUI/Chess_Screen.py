@@ -23,25 +23,29 @@ letters = ['a','b','c','d','e','f','g','h']
 numbers = ['8','7','6','5','4','3','2','1']
 move_list = []
 
-#black images
 background = pg.image.load("board.png")
-RookB = pg.image.load("Images/Pieces/CHiss.png")
-BishopB = pg.image.load("Images/Pieces/BishopB.png")
-KnightB = pg.image.load("Images/Pieces/Horse_Girl_Black.png")
-KingB = pg.image.load("Images/Pieces/KingB.png")
-QueenB = pg.image.load("Images/Pieces/QueenB.png")
-PawnB = pg.image.load("Images/Pieces/Pwned_Black.png")
+
+#black images
+RookB = pg.image.load("Images/Pieces/rookB.svg")
+BishopB = pg.image.load("Images/Pieces/bishopB.svg")
+KnightB = pg.image.load("Images/Pieces/knightB.svg")
+KingB = pg.image.load("Images/Pieces/kingB.svg")
+QueenB = pg.image.load("Images/Pieces/queenB.svg")
+PawnB = pg.image.load("Images/Pieces/pawnB.svg")
 
 #white images
-
-RookW = pg.image.load("Images/Pieces/w_rook.png")
-BishopW = pg.image.load("Images/Pieces/w_bishop.png")
-KingW = pg.image.load("Images/Pieces/w_king.png")
-QueenW = pg.image.load("Images/Pieces/w_queen.png")
-KnightW = pg.image.load("Images/Pieces/Horse_Girl_White.png")
-PawnW = pg.image.load("Images/Pieces/Pwned_White.png")
+RookW = pg.image.load("Images/Pieces/rookW.svg")
+BishopW = pg.image.load("Images/Pieces/bishopW.svg")
+KingW = pg.image.load("Images/Pieces/kingW.svg")
+QueenW = pg.image.load("Images/Pieces/queenW.svg")
+KnightW = pg.image.load("Images/Pieces/knightW.svg")
+PawnW = pg.image.load("Images/Pieces/pawnW.svg")
 
 yStart = (window.get_height() - background.get_height())//2
+pieceSize = (100, 100)
+
+def scaleImage(img, size):
+    return pg.transform.smoothscale(img, size)
 
 #highlights current square of mouse
 def highlight_square():
@@ -71,31 +75,31 @@ def update_board(board):
 
         #displays black pieces
         if state[piece] == 'r':
-            window.blit(RookB, (x,y))
+            window.blit(scaleImage(RookB, pieceSize), (x,y))
         elif state[piece] == 'b':
-            window.blit(BishopB, (x,y))
+            window.blit(scaleImage(BishopB, pieceSize), (x,y))
         elif state[piece] == 'n':
-            window.blit(KnightB, (x,y))
+            window.blit(scaleImage(KnightB, pieceSize), (x,y))
         elif state[piece] == 'k':
-            window.blit(KingB, (x,y))
+            window.blit(scaleImage(KingB, pieceSize), (x,y))
         elif state[piece] == 'q':
-            window.blit(QueenB, (x,y))
+            window.blit(scaleImage(QueenB, pieceSize), (x,y))
         elif state[piece] == 'p':
-            window.blit(PawnB, (x,y))
+            window.blit(scaleImage(PawnB, pieceSize), (x,y))
 
         #displays white pieces
         elif state[piece] == 'R':
-            window.blit(RookW, (x,y))
+            window.blit(scaleImage(RookW, pieceSize), (x,y))
         elif state[piece] == 'B':
-            window.blit(BishopW, (x,y))
+            window.blit(scaleImage(BishopW, pieceSize), (x,y))
         elif state[piece] == 'K':
-            window.blit(KingW, (x,y))
+            window.blit(scaleImage(KingW, pieceSize), (x,y))
         elif state[piece] == 'Q':
-            window.blit(QueenW, (x,y))
+            window.blit(scaleImage(QueenW, pieceSize), (x,y))
         elif state[piece] == 'P':
-            window.blit(PawnW, (x,y))
+            window.blit(scaleImage(PawnW, pieceSize), (x,y))
         elif state[piece] == 'N':
-            window.blit(KnightW, (x,y))
+            window.blit(scaleImage(KnightW, pieceSize), (x,y))
         x += 100
 
 #highlights currently clicked on square

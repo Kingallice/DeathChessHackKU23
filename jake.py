@@ -16,8 +16,8 @@ pygame.init()
 screen = pygame.display.set_mode((1280,720))
 clock = pygame.time.Clock()
 
-p1 = PlayerController.Player("Images/Pieces/CHiss.png",20,100,475,0,-20,screen)
-p2 = PlayerController.Player("Images/Pieces/Pwned.png",20,1100,475,0,-20,screen)
+p1 = PlayerController.Player("Images/Pieces/rookB.svg",20,100,475,0,-20,screen)
+p2 = PlayerController.Player("Images/Pieces/pawnW.svg",20,1100,475,0,-20,screen)
 
 p1_health = 595
 p2_health = 685
