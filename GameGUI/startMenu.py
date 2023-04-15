@@ -35,7 +35,7 @@ running = True
 dt = 0
 
 btnMenuText = ["Start", "Settings", "Exit"]
-btnSettingsText = ["Display","Resolution","Fullscreen","Back"]
+btnSettingsText = ["Fullscreen","Back"]
 btnArr = []
 
 titleText = pygame.font.Font('./Fonts/WereWolf.ttf', 300).render("Death Chess", True, "black")
@@ -77,7 +77,7 @@ while running:
                             btn.get_rect().width,
                             btn.get_rect().height).collidepoint(mosPos[0], mosPos[1]):
                     if btnMenuText[i] =="Start":
-                            print("Game Start")
+                            import GameGUI.Chess_Screen
                     elif btnMenuText[i] == "Settings":
                             settingMenu = True
                     elif btnMenuText[i] == "Exit":
