@@ -9,7 +9,7 @@ background = pg.image.load("board.png")
 
 #Checks to see if mouse is on certain squares
 def highlight_square(pos):
-    for x in range(360,1160,100):
+    for x in range(window.get_width()//4,1160,100):
         increase = 0
         for y in range(0,828,103):
             increase += 0.5
