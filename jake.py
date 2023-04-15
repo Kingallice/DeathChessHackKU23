@@ -33,6 +33,7 @@ while True:
             exit()
 
         p1.player_input()
+        p2.player_input2()
 
         """if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w and player_1_rect.bottom >= ground:
@@ -59,13 +60,21 @@ while True:
     pygame.draw.line(screen, "Red", (55, 50), (p1_health, 50), width=40)
     pygame.draw.line(screen, "Red", (p2_health, 50), (1225, 50), width=40)
 
-    p1_health -= 1
-    p2_health += 1
-    #pygame.draw.line(screen,"White",(100,50))
+
+
+    if p1_health > 1 and p2_health < 1224:
+        p1_health -= 1
+        p2_health += 1
 
 
 
     screen.blit(timer,time_rect)
+
+
+
+    p1.check_l_e()
+    p2.check_l_e()
+
 
     p1.player_gravity()
     p2.player_gravity()
