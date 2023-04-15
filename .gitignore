@@ -6,7 +6,6 @@
 [Ll]ibrary/
 [Ll]ocal[Cc]ache/
 [Oo]bj/
-[Ll]ogs/
 [Tt]emp/
 [Uu]nityGenerated/
 # file on crash reports
@@ -26,15 +25,16 @@ sysinfo.txt
 *.unityproj
 *.user
 *.userprefs
-*.pidb
+.pidb
 .DS_Store
+[Ll]ogs/
 
 ###
 # OS generated
 ###
 .DS_Store
-.DS_Store?
-._*
+.DSStore?
+.
 .Spotlight-V100
 .Trashes
 Icon?
