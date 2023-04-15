@@ -1,8 +1,6 @@
 import chess
 
 class ChessManager:
-    __slots__ = "board"
-
     def __init__(self) -> None:
         self.board = chess.Board()
 
@@ -13,8 +11,16 @@ class ChessManager:
         if (self.board.fullmove_number % 2 == 0):
             return "BLACK"
         return "WHITE"
-
-    def getWhite(self):
-        print("white")
+    
+    def isLegalMove(self, uciMove=None):
+        if uciMove in self.board.generate_legal_moves:
+            return True
+        return False
+    
+    def pushMove(self, uciMove=None):
+        if uciMove:
+            self.board.push_uci(uciMove)
+            return True
+        return False
 
 print(ChessManager().getTurn())
