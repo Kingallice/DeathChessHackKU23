@@ -1,7 +1,11 @@
+#Date: 4-14-23
+#Author: Luke Slizoski
+#This file is the gui for interactions with the board
+
+
 import pygame as pg
 import sys
 from Chess.chessManager import ChessManager
-import chess
 
 board = ChessManager()
 bg_color = (0,0,255) #blue
@@ -14,18 +18,20 @@ pg.display.flip()
 background = pg.image.load("board.png")
 RookB = pg.image.load("Images/Pieces/CHiss.png")
 BishopB = pg.image.load("Images/Pieces/BishopB.png")
-KnightB = pg.image.load("Images/Pieces/KnightB.png")
+KnightB = pg.image.load("Images/Pieces/Horse_Girl_Black.png")
 KingB = pg.image.load("Images/Pieces/KingB.png")
 QueenB = pg.image.load("Images/Pieces/QueenB.png")
-PawnB = pg.image.load("Images/Pieces/Pwned.png")
+PawnB = pg.image.load("Images/Pieces/Pwned_Black.png")
 
 #white images
+"""
 RookW = pg.image.load("")
 BishopW = pg.image.load("")
-KnightW = pg.image.load("")
 KingW = pg.image.load("")
 QueenW = pg.image.load("")
-PawnW = pg.image.load("")
+"""
+KnightW = pg.image.load("Images/Pieces/Horse_Girl_White.png")
+PawnW = pg.image.load("Images/Pieces/Pwned_White.png")
 
 #highlights current square of mouse
 def highlight_square(pos):
@@ -41,7 +47,6 @@ def highlight_square(pos):
 
 def update_board(board):
     state = board.getFen()
-    print(state)
     x = window.get_width()//4
     y = 0
     for piece in range(len(state)):
@@ -57,33 +62,39 @@ def update_board(board):
         #displays black pieces
         if state[piece] == 'r':
             window.blit(RookB, (x,y))
-        if state[piece] == 'b':
+        elif state[piece] == 'b':
             window.blit(BishopB, (x,y))
-        if state[piece] == 'n':
+        elif state[piece] == 'n':
             window.blit(KnightB, (x,y))
-        if state[piece] == 'k':
+        elif state[piece] == 'k':
             window.blit(KingB, (x,y))
-        if state[piece] == 'q':
+        elif state[piece] == 'q':
             window.blit(QueenB, (x,y))
-        if state[piece] == 'p':
+        elif state[piece] == 'p':
             window.blit(PawnB, (x,y))
 
         #displays white pieces
-        if state[piece] == 'R':
+        """
+        elif state[piece] == 'R':
             window.blit(RookW, (x,y))
-        if state[piece] == 'B':
+        elif state[piece] == 'B':
             window.blit(BishopW, (x,y))
-        if state[piece] == 'N':
-            window.blit(KnightW, (x,y))
-        if state[piece] == 'K':
+        elif state[piece] == 'K':
             window.blit(KingW, (x,y))
-        if state[piece] == 'Q':
+        elif state[piece] == 'Q':
             window.blit(QueenW, (x,y))
+        """
         if state[piece] == 'P':
             window.blit(PawnW, (x,y))
-
+        elif state[piece] == 'N':
+            window.blit(KnightW, (x,y))
         x += 100
 
+def move():
+    if board.isLegalMove("e2e4"):
+        board.pushMove("e2e4")
+
+move()
 while True:
     pos = pg.mouse.get_pos()
     window.fill(bg_color)

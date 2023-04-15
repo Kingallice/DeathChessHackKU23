@@ -52,7 +52,7 @@ class ChessManager:
     
     def isLegalMove(self, uciMove=None):
         """Return True if passed move is legal."""
-        if uciMove in self.board.generate_legal_moves:
+        if uciMove in self.board.generate_legal_moves():
             return True
         return False
     
