@@ -7,6 +7,7 @@ import pygame as pg
 import sys
 import json
 from Chess.chessManager import ChessManager
+import chess
 
 settings = json.loads(open("./Config/settings.dat", "r").read())
 
@@ -113,10 +114,13 @@ def clicked_highlighted_square():
         if first[1] == num:
             break
         ycord += 103.5
-    if board.isOccupied(first[0]+first[1]):
+
+    if board.isOccupied(first[0] + first[1]):
         square2 = pg.Surface((100, 103), pg.SRCALPHA)
         square2.fill((255, 255, 0, 75))
         window.blit(square2, (xcord, ycord))
+    elif board.isOccupied(first[0] + first[1]) == False and len(move_list)==1:
+        move_list.clear()
 
     if len(move_list) == 2:
         move(move_list[-2] + move_list[-1])

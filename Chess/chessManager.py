@@ -86,6 +86,12 @@ class ChessManager:
             return True
         return False
 
+    def isWhite(self,location):
+        if self.board.piece_at(chess.parse_square(location)) == chess.WHITE:
+            return True
+        else:
+            return False
+
     def removePiece(self, location):
         """Removes and returns piece at uci location passed"""
         return self.board.remove_piece_at(chess.parse_square(location))
