@@ -24,9 +24,6 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_d]:
             self.rect.x += self.speed
 
-        if keys[pygame.K_s]:
-            pass
-
         if keys[pygame.K_a]:
             self.rect.x += -self.speed
 
@@ -76,11 +73,11 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(surface, (255,255,255), attacking_rect)
 
     def attack_r(self, surface):
-        attacking_rect = pygame.Rect(self.rect.centerx , self.rect.y, self.rect.width, self.rect.height)
+        attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y, self.rect.width, self.rect.height)
         pygame.draw.rect(surface, (255,255,255), attacking_rect)
 
     def attack_l(self,surface):
-        attacking_rect = pygame.Rect(-self.rect.centerx, self.rect.y, self.rect.width, self.rect.height)
+        attacking_rect = pygame.Rect(self.rect.left - 80, self.rect.y, self.rect.width, self.rect.height)
         pygame.draw.rect(surface, (255, 255, 255), attacking_rect)
 
 
