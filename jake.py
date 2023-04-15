@@ -3,7 +3,7 @@ import PlayerController
 from sys import exit
 
 test = 0
-start_time = 55200
+start_time = 92000
 def display_time():
 
     current_time = start_time - pygame.time.get_ticks()
