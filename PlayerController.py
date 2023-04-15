@@ -1,6 +1,6 @@
 import pygame
 class Player(pygame.sprite.Sprite):
-    def __init__(self,image,speed,p_x,p_y,p_gravity,df):
+    def __init__(self,image,speed,p_x,p_y,p_gravity,df,sur):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect(topleft = (p_x,p_y))
@@ -10,6 +10,7 @@ class Player(pygame.sprite.Sprite):
         self.downforce = df
         self.dx = 0
         self.dy = 0
+        self.sur = sur
 
     def player_input(self):
         keys = pygame.key.get_pressed()
@@ -24,6 +25,9 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_a]:
             self.rect.x += -self.speed
+
+        if keys[pygame.K_f]:
+            self.attack(self.sur)
 
     def player_input2(self):
         keys = pygame.key.get_pressed()
@@ -51,3 +55,6 @@ class Player(pygame.sprite.Sprite):
         if self.rect.right + self.rect.x > 2500:
             self.rect.x = 2500 - self.rect.right
 
+    def attack(self, surface):
+        attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y, self.rect.width, self.rect.height)
+        pygame.draw.rect(surface, (255,255,255), attacking_rect)
