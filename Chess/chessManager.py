@@ -17,6 +17,13 @@ class ChessManager:
         if (self.board.fullmove_number % 2 == 0):
             return chess.BLACK
         return chess.WHITE
+    
+    def skipTurn(self):
+        """Skips the current players turn."""
+        if self.board.turn == chess.WHITE:
+            self.board.turn = chess.BLACK
+        else:
+            self.board.turn = chess.WHITE
 
     def get_board(self):
         """get the board state of all pieces"""
@@ -58,6 +65,9 @@ class ChessManager:
         if uciMove in (move.uci() for move in self.board.generate_legal_moves()):
             return True
         return False
+    
+    def isCheck(self):
+        """"""
     
     def pushMove(self, uciMove=None):
         """Pushes the passed move to the board."""
