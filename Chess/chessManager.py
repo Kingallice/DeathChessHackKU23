@@ -7,7 +7,7 @@ class ChessManager:
 
     def getFen(self):
         """Returns the fen of the board."""
-        return self.board.fen
+        return self.board.board_fen()
 
     def getTurn(self):
         """Get current player turn of the board."""
@@ -40,6 +40,10 @@ class ChessManager:
             return chess.KNIGHT
         elif pieceChar == "p":
             return chess.PAWN
+        
+    def getCastleRights(self, color=None):
+        if color == chess.WHITE or color == chess.BLACK:
+            return self.board.has_castling_rights(color)
     
     def isLegalMove(self, uciMove=None):
         """Return True if passed move is legal."""
