@@ -1,6 +1,4 @@
 import pygame
-
-
 class Player(pygame.sprite.Sprite):
     def __init__(self,image,speed,p_x,p_y,p_gravity,df):
         super().__init__()
