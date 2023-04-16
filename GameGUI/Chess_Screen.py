@@ -5,8 +5,10 @@
 import pygame as pg
 import sys
 import json
+from jake import Jake
 from Chess.chessManager import ChessManager
 
+running = True
 settings = json.loads(open("./Config/settings.dat", "r").read())
 
 tempData = open("./Config/temp.dat", "r+b")
@@ -154,11 +156,14 @@ def clicked_highlighted_square():
             tempData = open("./Config/temp.dat", "w+b")
             tempData.write(board.board.fen().encode())
             tempData.close()
-            conflict = {"attacker": {"pos": move_list[-2], "type": board.getPieceAt(move_list[-2])}}
-            print(conflict)
-            tempData = open("./Config/toBattle.dat", "w+b")
-            json.dump(tempData)
-            import jake
+            conflict = {"attacker": {"pos": move_list[-2], "piece": board.getTurnChar()+board.getPieceName(board.getPieceAt(move_list[-2]))},
+                        "defender": {"pos": move_list[-1].replace(choice,""), "piece": board.getTurnChar(True)+board.getPieceName(board.getPieceAt(move_list[-1].replace(choice,"")))}}
+            tempData = open("./Config/battle.dat", "w+")
+            json.dump(conflict,tempData)
+            tempData.close()
+            running = False
+            running = Jake().start()
+            
         move(move_list[-2] + move_list[-1])
         
         move_list.clear()
@@ -200,20 +205,34 @@ def move(uciMove):
     if board.isLegalMove(uciMove):
         board.pushMove(uciMove)
 
+def getBattleData():
+    battleFile = open("./Config/battle.dat", "r+")
+    battleData = battleFile.read()
+    if battleData:
+        battleData = json.loads(battleData)
+    else:
+        return None
+    battleFile.close()
+    battleFile = open("./Config/battle.dat", "w+")
+    battleFile.close()
+    return battleData
+
 #runs the game
-while True:
+while running:
     window.fill(bg_color)
     window.blit(background, (window.get_width()/4,yStart))
     update_board(board)
     highlight_square()
     clicked_highlighted_square()
-    pg.display.update()
     pg.display.flip()
+
+    temp = getBattleData()
+    if temp:
+        print(temp)
 
     for event in pg.event.get():  #event to quit the game
         if event.type == pg.QUIT:
-            pg.quit()
-            sys.exit()
+            running = False
 
         elif event.type == pg.MOUSEBUTTONUP: #event to get square/piece coordinates
             clicked_pos = pg.mouse.get_pos()
@@ -232,6 +251,4 @@ while True:
                     if clicked_pos[1] > 0 and clicked_pos[1] < yStart + (y * 103.5):
                         uciMove += numbers[y-1]
                         break
-
-
             move_list.append(uciMove)

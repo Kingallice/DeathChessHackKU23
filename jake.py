@@ -3,124 +3,112 @@ import PlayerController
 from sys import exit
 import Piece
 import json
-import re
-import time
 
 settings = json.loads(open("./Config/settings.dat", "r").read())
+Meadow = pygame.image.load("Images/BackGround/Background.png").convert()
+timer_font = pygame.font.Font(None, 60)
 
 test = 0
 defTime = 92
 overTime = 10
 barSize = 500
 
-pygame.init()
-screen = pygame.display.set_mode(settings["currResolution"])
-if settings["fullscreen"]:
-    screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
-clock = pygame.time.Clock()
+class Jake():
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode(settings["currResolution"])
+        if settings["fullscreen"]:
+            self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+        self.clock = pygame.time.Clock()
+        self.start_time = self.resetTime(defTime)
+        battleInit = open("./Config/battle.dat", "r+")
+        self.battleData = json.loads(battleInit.read())
+        battleInit.close()
+        self.env = (self.screen.get_rect().centery-Meadow.get_height()/2+600, 
+                    self.screen.get_rect().centerx-Meadow.get_width()/2, 
+                    self.screen.get_rect().centerx+Meadow.get_width()/2)
+        self.p1 = self.get_piece_stats(self.battleData, "attacker")
+        self.p2 = self.get_piece_stats(self.battleData, "defender")
+    def resetTime(self,nexttime):
+        return pygame.time.get_ticks()//1000 + nexttime
+    
+    def get_time(self):
+        return self.start_time - pygame.time.get_ticks()//1000
 
-def resetTime(nexttime):
-    return pygame.time.get_ticks()//1000 + nexttime
+    def display_time(self):
+        left, right = str(self.get_time()//60).split(".")[0], ("0"+str(self.get_time()%60))
+        return left +":"+ right[-2:]
 
-start_time = resetTime(defTime)
+    # Created function that pulls piece stat list from piece.py dict, and splits it before returning stats
+    def get_piece_stats(self, data, side):
+        pieceList = Piece.piece_stats[data[side]["piece"]]
+        color = data[side]["piece"][0]
+        location = data[side]["pos"]
+        image = pieceList[0]
+        speed = pieceList[1]
+        posx= pieceList[2]
+        posy=pieceList[3]
+        gravity=pieceList[4]
+        df=pieceList[5]
+        sur=pieceList[6]
+        health=pieceList[7]
+        attack =pieceList[8]
 
-def get_time():
-    return start_time - pygame.time.get_ticks()//1000
+        return PlayerController.Player(side, color, location, image, speed, posx, posy, gravity, df, sur, health, attack, self.env)
+    
+    def start(self):
+        running = True
+        while running:
+            self.screen.fill('black')
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
 
-def display_time():
-    left, right = str(get_time()//60).split(".")[0], ("0"+str(get_time()%60))
-    return left +":"+ right[-2:]
+            if self.get_time() <= 0:
+                if (self.p1.health/p1.max_health) > (self.p2.health/self.p2.max_health):
+                    running = not p1.win()
+                elif (self.p1.health/p1.max_health) < (self.p2.health/self.p2.max_health):
+                    running = not p2.win()
+                else:
+                    start_time = self.resetTime(overTime)
+                    
 
-piece1 = "Wpawn"
-piece2 = 'Bqueen'
-conflict = {"location": "a2", "defender":"Wpawn", "attacker":"BQueen"}
+            infoHeight = self.screen.get_rect().centery-Meadow.get_height()/2 + 30
 
-Meadow = pygame.image.load("Images/BackGround/Background.png").convert()
+            timer = timer_font.render(str(self.display_time()), True, 'Green')
+            time_rect = timer.get_rect(center=(self.screen.get_rect().centerx, infoHeight))
 
-env = (screen.get_rect().centery-Meadow.get_height()/2+600, 
-       screen.get_rect().centerx-Meadow.get_width()/2, 
-       screen.get_rect().centerx+Meadow.get_width()/2)
+            self.screen.blit(Meadow,(self.screen.get_width()/2 - Meadow.get_width()/2,self.screen.get_height()/2 - Meadow.get_height()/2))   #layer 1. Draw most bottom layer first. The sky
+                                            #layer 2. The ground
+            #Draws the background of line
+            pygame.draw.line(self.screen,"Cyan",(self.env[1]+10,infoHeight), (self.env[1]+barSize+20,infoHeight), width = 50)
+            pygame.draw.line(self.screen, "Cyan", (self.env[2]-barSize-20, infoHeight), (self.env[2]-10,infoHeight), width = 50)
 
-# Created function that pulls piece stat list from piece.py dict, and splits it before returning stats
-def get_piece_stats(piece1):
-    color = piece1[0]
-    type = piece1[1:]
-    pieceList = Piece.piece_stats[piece1]
-    image = pieceList[0]
-    speed = pieceList[1]
-    posx= pieceList[2]
-    posy=pieceList[3]
-    gravity=pieceList[4]
-    df=pieceList[5]
-    sur=pieceList[6]
-    health=pieceList[7]
-    attack =pieceList[8]
+            #Draws the actual Health Bar
+            pygame.draw.line(self.screen, "Red", (self.env[1]+15, infoHeight), (self.env[1]+15 + (max(0,self.p1.health/self.p1.max_health)*barSize), infoHeight), width=40)
+            pygame.draw.line(self.screen, "Red", (self.env[2]-15 - (max(0,self.p2.health/self.p2.max_health)*barSize), infoHeight), (self.env[2]-15 , infoHeight), width=40)
 
-    return PlayerController.Player(image, speed, posx, posy, gravity, df, sur, health, attack, env)
+            self.screen.blit(timer,time_rect)
 
-p1 = get_piece_stats(piece1)
+            self.p1.player_input(self.p2)
+            self.p2.player_input2(self.p1)
 
-p2 = get_piece_stats(piece2)
+            if self.p1.health <= 0:
+                running = not self.p1.win()
+            elif self.p2.health <= 0:
+                running = not self.p2.win()
 
+            self.p1.check_l_e()
+            self.p2.check_l_e()
 
+            self.p1.player_gravity()
+            self.p2.player_gravity()
 
-timer_font = pygame.font.Font(None, 60) #None is the font of the text
+            self.screen.blit(self.p1.image,self.p1.rect)
+            self.screen.blit(self.p2.image,self.p2.rect)
 
-running = True
+            #rect1.colliderrect(rect2) Checks for collision between two rectangles
+            #rect1.colliderpoint((x,y)) Checks for a collision at one specific point
 
-while running:
-    screen.fill('black')
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    if get_time() <= 0:
-        if (p1.health/p1.max_health) > (p2.health/p2.max_health):
-            running = not p1.win()
-        elif (p1.health/p1.max_health) < (p2.health/p2.max_health):
-            running = not p2.win()
-        else:
-            start_time = resetTime(overTime)
-            
-
-    infoHeight = screen.get_rect().centery-Meadow.get_height()/2 + 30
-
-    timer = timer_font.render(str(display_time()), True, 'Green')
-    time_rect = timer.get_rect(center=(screen.get_rect().centerx, infoHeight))
-
-    screen.blit(Meadow,(screen.get_width()/2 - Meadow.get_width()/2,screen.get_height()/2 - Meadow.get_height()/2))   #layer 1. Draw most bottom layer first. The sky
-                                    #layer 2. The ground
-    #Draws the background of line
-    pygame.draw.line(screen,"Cyan",(env[1]+10,infoHeight), (env[1]+barSize+20,infoHeight), width = 50)
-    pygame.draw.line(screen, "Cyan", (env[2]-barSize-20, infoHeight), (env[2]-10,infoHeight), width = 50)
-
-    #Draws the actual Health Bar
-    pygame.draw.line(screen, "Red", (env[1]+15, infoHeight), (env[1]+15 + (max(0,p1.health/p1.max_health)*barSize), infoHeight), width=40)
-    pygame.draw.line(screen, "Red", (env[2]-15 - (max(0,p2.health/p2.max_health)*barSize), infoHeight), (env[2]-15 , infoHeight), width=40)
-
-    screen.blit(timer,time_rect)
-
-    p1.player_input(p2)
-    p2.player_input2(p1)
-
-    if p1.health <= 0:
-        running = not p1.win()
-    elif p2.health <= 0:
-        running = not p2.win()
-
-    p1.check_l_e()
-    p2.check_l_e()
-
-    p1.player_gravity()
-    p2.player_gravity()
-
-    screen.blit(p1.image,p1.rect)
-    screen.blit(p2.image,p2.rect)
-
-    #rect1.colliderrect(rect2) Checks for collision between two rectangles
-    #rect1.colliderpoint((x,y)) Checks for a collision at one specific point
-
-    pygame.display.update()
-    clock.tick(60)
-
-pygame.quit()
+            pygame.display.update()
+            self.clock.tick(60)

@@ -18,6 +18,15 @@ class ChessManager:
             return chess.BLACK
         return chess.WHITE
     
+    def getTurnChar(self, opp=False):
+        if self.getTurn() and not opp:
+            return "W"
+        elif self.getTurn() and opp:
+            return "B"
+        elif not self.getTurn() and not opp:
+            return "W"
+        return "B"
+    
     def skipTurn(self):
         """Skips the current players turn."""
         if self.board.turn == chess.WHITE:

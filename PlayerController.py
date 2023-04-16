@@ -1,9 +1,19 @@
 import pygame
+import json
 class Player(pygame.sprite.Sprite):
-    def __init__(self,image,speed,p_x,p_y,p_gravity,df,sur,health,a_p,env=("grd","left","right")):
+    def __init__(self,
+                 side, color, location,
+                 image,
+                 speed,
+                 p_x,p_y,p_gravity,df,sur,
+                 health,a_p,
+                 env=("grd","left","right")):
         super().__init__()
         if p_x > 0:
             p_x = env[2] - 100
+        self.side = side
+        self.color = color
+        self.location = location
         self.image = pygame.transform.smoothscale(pygame.image.load(image).convert_alpha(), (100, 100))
         self.rect = self.image.get_rect(topleft = (p_x,p_y))
         self.speed = speed
@@ -97,6 +107,12 @@ class Player(pygame.sprite.Sprite):
             target.health -= self.a_p
 
     def win(self):
-        file = open("./Config/battleOut.dat", "w+")
-        file.write()
+        battleInit = open("./Config/battle.dat", "r+")
+        battleData = json.loads(battleInit.read())
+        battleData["winner"] = self.side
+        battleInit.close()
+        battleInit = open("./Config/battle.dat", "w+")
+        json.dump(battleData,battleInit)
+        battleInit.close()
+        import GameGUI.Chess_Screen
         return True
