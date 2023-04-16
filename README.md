@@ -1,7 +1,10 @@
 Created Students from The University Of Kearney Nebraska:
 Luke Slizoski:
+
 Jake Inthavongsa: jinthavongsa1@gmail.com
+
 Noah Mosel:
+
 Isaac Goff:
 
 This game was inspired by our desire to take a classic game everyone knows and mix it up just enough to keep things interesting without losing the too much of strategy of Chess.
