@@ -1,4 +1,4 @@
-Created Students from The University Of Kearney Nebraska:
+Created Students from The University of Nebraska at Kearney:
 
 Luke Slizoski:lslizoski32@gmail.com
 
