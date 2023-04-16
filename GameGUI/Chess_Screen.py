@@ -145,9 +145,10 @@ def clicked_highlighted_square():
     if len(move_list) == 2:
         typeP = board.getPieceName(board.getPieceAt(move_list[0]))
         number = move_list[1]
-        if typeP == 'pawn' and number[1] == '8':
+        if typeP == 'pawn' and (number[1] == '8' or number[1] == '1'):
             choice = promotion_choice()
             move_list[-1] = move_list[-1] + choice
+
 
         if board.isLegalMove(move_list[-2] + move_list[-1]) and board.isOccupied(move_list[-1].replace(choice,"")):
             tempData = open("./Config/temp.dat", "w+b")
@@ -164,17 +165,35 @@ def clicked_highlighted_square():
 
 #allows the choice to promote to specfic peices
 def promotion_choice():
-    square3 = pg.Surface((200,207))
-    square3.fill((255, 255, 255, 75))
-    window.blit(square3, (window.get_width()/4 - 225,window.get_height()/2))
-    window.blit(scaleImage(QueenW, pieceSize),(window.get_width()/4 - 225, window.get_height()/2))
-    window.blit(scaleImage(RookW, pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2))
-    window.blit(scaleImage(BishopW, pieceSize), (window.get_width() / 4 - 225, window.get_height() / 2 + 103.5))
-    window.blit(scaleImage(KnightW,pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2 + 103.5))
-    return 'q'
-    #while True:
-    #    pawn_promo_highlight()
-
+    while True:
+        window.fill(bg_color)
+        window.blit(background, (window.get_width() / 4, yStart))
+        update_board(board)
+        square3 = pg.Surface((200, 207))
+        square3.fill((255, 255, 255, 75))
+        window.blit(square3, (window.get_width() / 4 - 225, window.get_height() / 2))
+        window.blit(scaleImage(QueenW, pieceSize), (window.get_width() / 4 - 225, window.get_height() / 2))
+        window.blit(scaleImage(RookW, pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2))
+        window.blit(scaleImage(BishopW, pieceSize), (window.get_width() / 4 - 225, window.get_height() / 2 + 103.5))
+        window.blit(scaleImage(KnightW, pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2 + 103.5))
+        pawn_promo_highlight()
+        pg.display.update()
+        pg.display.flip()
+        for event in pg.event.get():
+            if event.type == pg.MOUSEBUTTONUP:  # event to get square/piece coordinates
+                pos = pg.mouse.get_pos()
+                if pos[0] > window.get_width()/4 - 255 and pos[0] < window.get_width()/4 - 155:
+                    if pos[1] > window.get_height()/2 and pos[1] < window.get_height()/2 + 103.5:
+                        return 'q'
+                if pos[0] > window.get_width()/4 - 155 and pos[0] < window.get_width()/4 - 55:
+                    if pos[1] > window.get_height()/2 and pos[1] < window.get_height()/2 + 103.5:
+                        return 'r'
+                if pos[0] > window.get_width()/4 - 255 and pos[0] < window.get_width()/4 - 155:
+                    if pos[1] > window.get_height()/2 -103.5 and pos[1] < window.get_height()/2 + 207:
+                        return 'b'
+                if pos[0] > window.get_width()/4 - 155 and pos[0] < window.get_width()/4 - 55:
+                    if pos[1] > window.get_height()/2 and pos[1] < window.get_height()/2 + 207:
+                        return 'n'
 
 #Makes only valid moves for player
 def move(uciMove):
