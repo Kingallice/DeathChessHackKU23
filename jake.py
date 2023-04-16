@@ -9,35 +9,27 @@ import time
 settings = json.loads(open("./Config/settings.dat", "r").read())
 
 test = 0
-defTime = 72
-start_time = time.time() + defTime
+defTime = 92
+overTime = 10
 barSize = 500
-
-def resetTime():
-    start_time = defTime + time.time()
-
-def display_time():
-    current_time = start_time - time.time()
-    
- #   if timeright < 100:
-  #      timeright = "0"+str(timeright)
-   # elif not timeright:
-    #    timeright = "00000"
-    #timeStr = (str(timeleft) + ":" + str(timeright)+"000")
-    #timeObj = re.search("[0-9]:[0-5][0-9]", timeStr)
-    #if timeObj:
-    return re.search("[0-9][0-9]:[0-5][0-9]", str(current_time))#timeObj[0][0:4]
-
-
-def get_time():
-    time_left = start_time - time.time()
-    return time_left
 
 pygame.init()
 screen = pygame.display.set_mode(settings["currResolution"])
 if settings["fullscreen"]:
     screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
 clock = pygame.time.Clock()
+
+def resetTime(nexttime):
+    return pygame.time.get_ticks()//1000 + nexttime
+
+start_time = resetTime(defTime)
+
+def get_time():
+    return start_time - pygame.time.get_ticks()//1000
+
+def display_time():
+    left, right = str(get_time()//60).split(".")[0], ("0"+str(get_time()%60))
+    return left +":"+ right[-2:]
 
 piece1 = "Wpawn"
 piece2 = 'Bqueen'
@@ -82,13 +74,13 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        if get_time() <= 0:
-            if p1.health > p2.health:
-                running = not p1.win()
-            elif p1.health < p2.health:
-                running = not p2.win()
-            else:
-                resetTime()
+    if get_time() <= 0:
+        if (p1.health/p1.max_health) > (p2.health/p2.max_health):
+            running = not p1.win()
+        elif (p1.health/p1.max_health) < (p2.health/p2.max_health):
+            running = not p2.win()
+        else:
+            start_time = resetTime(overTime)
             
 
     infoHeight = screen.get_rect().centery-Meadow.get_height()/2 + 30
