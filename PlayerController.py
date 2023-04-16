@@ -114,5 +114,4 @@ class Player(pygame.sprite.Sprite):
         battleInit = open("./Config/battle.dat", "w+")
         json.dump(battleData,battleInit)
         battleInit.close()
-        import GameGUI.Chess_Screen
         return True

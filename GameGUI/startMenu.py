@@ -1,6 +1,7 @@
 import pygame
 import json
 import os
+from GameGUI.Chess_Screen import ChessBoard
 
 btnYStart = 0
 btnPadding = 10
@@ -83,7 +84,7 @@ while running:
                     if btnMenuText[i] =="Start":
                             temp = open("./Config/temp.dat", "wb")
                             temp.close()
-                            import GameGUI.Chess_Screen
+                            ChessBoard().start()
                     elif btnMenuText[i] == "Settings":
                             settingMenu = True
                     elif btnMenuText[i] == "Exit":

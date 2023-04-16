@@ -4,6 +4,7 @@ from sys import exit
 import Piece
 import json
 
+pygame.init()
 settings = json.loads(open("./Config/settings.dat", "r").read())
 Meadow = pygame.image.load("Images/BackGround/Background.png").convert()
 timer_font = pygame.font.Font(None, 60)
@@ -15,7 +16,6 @@ barSize = 500
 
 class Jake():
     def __init__(self):
-        pygame.init()
         self.screen = pygame.display.set_mode(settings["currResolution"])
         if settings["fullscreen"]:
             self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
