@@ -1,10 +1,11 @@
-#AUTHOR -Isaac Goff
+#AUTHOR - Isaac Goff
 import pygame
 
 
 screen = pygame.display.set_mode((1280, 720))
 
 # In order in the dict value: Imagefile, speed, posx, posy, gravity, df, sur, health, attack
+# Passed to jake.py for fight script
 piece_stats = {"Wpawn": ["Images/Pieces/pawnW.svg",20,0,475,0,-20,screen, 595,4] ,
                "Bpawn": ["Images/Pieces/pawnB.svg",20,100,475,0,-20,screen, 685,4],
                "Wrook": ["Images/Pieces/rookW.svg", 15, 0, 475, 2, -20, screen,595, 6],
