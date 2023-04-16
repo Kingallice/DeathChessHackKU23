@@ -23,7 +23,7 @@ class ChessManager:
             return "W"
         elif self.getTurn() and opp:
             return "B"
-        elif not self.getTurn() and not opp:
+        elif not self.getTurn() and opp:
             return "W"
         return "B"
     
