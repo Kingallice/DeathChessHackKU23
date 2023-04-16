@@ -41,6 +41,7 @@ clock = pygame.time.Clock()
 
 piece1 = "Wpawn"
 piece2 = 'Bqueen'
+conflict = {"location": "a2", "defender":"Wpawn", "attacker":"BQueen"}
 
 Meadow = pygame.image.load("Images/BackGround/Background.png").convert()
 
@@ -50,6 +51,8 @@ env = (screen.get_rect().centery-Meadow.get_height()/2+600,
 
 # Created function that pulls piece stat list from piece.py dict, and splits it before returning stats
 def get_piece_stats(piece1):
+    color = piece1[0]
+    type = piece1[1:]
     pieceList = Piece.piece_stats[piece1]
     image = pieceList[0]
     speed = pieceList[1]
@@ -81,9 +84,9 @@ while running:
 
         if get_time() <= 0:
             if p1.health > p2.health:
-                p1.win()
+                running = not p1.win()
             elif p1.health < p2.health:
-                p2.win()
+                running = not p2.win()
             else:
                 resetTime()
             
@@ -109,9 +112,9 @@ while running:
     p2.player_input2(p1)
 
     if p1.health <= 0:
-        p1.win()
+        running = not p1.win()
     elif p2.health <= 0:
-        p2.win()
+        running = not p2.win()
 
     p1.check_l_e()
     p2.check_l_e()

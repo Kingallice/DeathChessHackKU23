@@ -26,7 +26,7 @@ pg.display.flip()
 letters = ['a','b','c','d','e','f','g','h']
 numbers = ['8','7','6','5','4','3','2','1']
 move_list = []
-
+print(window.get_height()//2 - 104)
 background = pg.image.load("board.png")
 
 #black images
@@ -63,13 +63,16 @@ def highlight_square():
                     square = pg.Surface((100,103 + increase), pg.SRCALPHA)
                     square.fill((255,255,0,75))
                     window.blit(square,(x,y))
-"""trying to get pawn promotion square highlight
-    if pos[0] > window.get_width()/4 - 255 and pos[0] < window.get_width()/4 -155:
-        if pos[1] > window.get_height()/2 and pos[1] < window.get_height()/2 - 103.5:
-            square = pg.Surface((100, 103.5), pg.SRCALPHA)
-            square.fill((255, 255, 0, 75))
-            window.blit(square, (window.get_width()/4 - 255, window.get_height()/2))
-"""
+
+    #trying to get pawn promotion square highlight
+    for x in range(window.get_width()//4 - 255, window.get_width()//4 - 154, 100):
+        for y in range(window.get_height()//2, window.get_height()//2 +104, 103):
+            if pos[0] > x and pos[0] < x + 100:
+                if pos[1] > y and pos[1] < y + 103 + 0.5:
+                    square = pg.Surface((100, 103 + 0.5), pg.SRCALPHA)
+                    square.fill((255, 255, 0, 75))
+                    window.blit(square, (x+28, y))
+
 #updates the pieces on the board
 def update_board(board):
     state = board.getFen()
@@ -140,20 +143,21 @@ def clicked_highlighted_square():
         if board.isLegalMove(move_list[-2] + move_list[-1]) and board.isOccupied(move_list[-1]):
             tempData = open("./Config/temp.dat", "w+b")
             tempData.write(board.board.fen().encode())
+            tempData.close()
             import jake
         move(move_list[-2] + move_list[-1])
         
         move_list.clear()
 
+#allows the choice to promote to specfic peices
 def promotion_choice():
     square3 = pg.Surface((200,206.5))
     square3.fill((255, 255, 255, 75))
     window.blit(square3, (window.get_width()/4 - 225,window.get_height()/2))
-    window.blit(QueenW,(window.get_width()/4 - 225, window.get_height()/2))
-    window.blit(RookW, (window.get_width() / 4 - 125, window.get_height() / 2))
-    window.blit(BishopW, (window.get_width() / 4 - 225, window.get_height() / 2 + 103.5))
-    window.blit(KnightW, (window.get_width() / 4 - 125, window.get_height() / 2 + 103.5))
-
+    window.blit(scaleImage(QueenW, pieceSize),(window.get_width()/4 - 225, window.get_height()/2))
+    window.blit(scaleImage(RookW, pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2))
+    window.blit(scaleImage(BishopW, pieceSize), (window.get_width() / 4 - 225, window.get_height() / 2 + 103.5))
+    window.blit(scaleImage(KnightW,pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2 + 103.5))
 
 #Makes only valid moves for player
 def move(uciMove):
@@ -164,10 +168,10 @@ def move(uciMove):
 while True:
     window.fill(bg_color)
     window.blit(background, (window.get_width()/4,yStart))
+    promotion_choice()
     update_board(board)
     highlight_square()
     clicked_highlighted_square()
-    promotion_choice()
     pg.display.update()
     pg.display.flip()
 
@@ -175,6 +179,7 @@ while True:
         if event.type == pg.QUIT:
             pg.quit()
             sys.exit()
+
         elif event.type == pg.MOUSEBUTTONUP: #event to get square/piece coordinates
             clicked_pos = pg.mouse.get_pos()
             uciMove = ''
@@ -195,4 +200,3 @@ while True:
 
 
             move_list.append(uciMove)
-

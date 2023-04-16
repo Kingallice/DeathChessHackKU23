@@ -95,4 +95,5 @@ class Player(pygame.sprite.Sprite):
 
     def win(self):
         file = open("./Config/battleOut.dat", "w+")
-        import GameGUI.Chess_Screen
+        file.write()
+        return True
