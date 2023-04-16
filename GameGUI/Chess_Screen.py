@@ -36,9 +36,13 @@ QueenW = pg.image.load("Images/Pieces/queenW.svg")
 KnightW = pg.image.load("Images/Pieces/knightW.svg")
 PawnW = pg.image.load("Images/Pieces/pawnW.svg")
 
-tempData = open("./Config/temp.dat", "r+b")
+def openTempData():
+    tempData = open("./Config/temp.dat", "r+b")
+    tempDataText = tempData.read()
+    tempData.close()
+    return tempDataText
+
 open("./Config/battle.dat", "w+").close()
-tempDataText = tempData.read()
 
 def scaleImage(img, size):
     return pg.transform.smoothscale(img, size)
@@ -57,9 +61,10 @@ def getBattleData():
 
 class ChessBoard():
     def __init__(self) -> None:
+        tempData = open("./Config/temp.dat", "w+b")
         self.board = ChessManager()
-        if len(tempDataText) > 0:
-            self.board = ChessManager(tempDataText.decode())
+        if len(openTempData()) > 0:
+            self.board = ChessManager(openTempData().decode())
 
         self.window = pg.display.set_mode(settings["currResolution"])
         if settings["fullscreen"]:
@@ -171,8 +176,9 @@ class ChessBoard():
                 tempData = open("./Config/temp.dat", "w+b")
                 tempData.write(self.board.board.fen().encode())
                 tempData.close()
-                conflict = {"attacker": {"pos": move_list[-2], "piece": self.board.getTurnChar()+self.board.getPieceName(self.board.getPieceAt(move_list[-2]))},
-                            "defender": {"pos": move_list[-1].replace(choice,""), "piece": self.board.getTurnChar(True)+self.board.getPieceName(self.board.getPieceAt(move_list[-1].replace(choice,"")))}}
+                conflict = {self.board.getColorAt(move_list[-2]): {"pos": move_list[-2], "piece": self.board.getColorAt(move_list[-2])[0].upper()+self.board.getPieceName(self.board.getPieceAt(move_list[-2]))},
+                            self.board.getColorAt(move_list[-1]): {"pos": move_list[-1].replace(choice,""), "piece": self.board.getColorAt(move_list[-1])[0].upper()+self.board.getPieceName(self.board.getPieceAt(move_list[-1].replace(choice,"")))}, 
+                            "attacker": self.board.getTurnColor(), "defender": self.board.getTurnColor(True)}
                 tempData = open("./Config/battle.dat", "w+")
                 json.dump(conflict,tempData)
                 tempData.close()
@@ -238,6 +244,21 @@ class ChessBoard():
             temp = getBattleData()
             if temp:
                 print(temp)
+                if "winner" in temp.keys():
+                    if temp["winner"] == temp["attacker"]:
+                        print("attacker")
+                        self.board.setPiece(temp[temp["defender"]]["pos"],
+                                            self.board.getPieceChar(temp[temp["attacker"]]["piece"][1:]),
+                                            self.board.getColor(temp["attacker"]))
+                        self.board.removePiece(temp[temp["attacker"]]["pos"])
+                    elif temp["winner"] == temp["defender"]:
+                        print("defender")
+                        self.board.setPiece(temp[temp["defender"]]["pos"],
+                                            self.board.getPieceChar(temp[temp["defender"]]["piece"][1:]),
+                                            self.board.getColor(temp["defender"]))
+                        self.board.removePiece(temp[temp["attacker"]]["pos"])
+                        #self.board.skipTurn()
+                        
 
             for event in pg.event.get():  #event to quit the game
                 if event.type == pg.QUIT:

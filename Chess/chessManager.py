@@ -14,19 +14,25 @@ class ChessManager:
 
     def getTurn(self):
         """Get current player turn of the board."""
-        if (self.board.fullmove_number % 2 == 0):
-            return chess.BLACK
-        return chess.WHITE
+        return self.board.turn
     
-    def getTurnChar(self, opp=False):
-        if self.getTurn() and not opp:
-            return "W"
-        elif self.getTurn() and opp:
-            return "B"
-        elif not self.getTurn() and opp:
-            return "W"
-        return "B"
+    def getTurnColor(self, opp=False):
+        if self.getTurn():
+            if not opp:
+                return "white"
+            return "black"
+        if not opp:
+            return "black"
+        return "white"
     
+    def getColor(self, color):
+        return chess.COLOR_NAMES.index(color)
+
+    def getColorAt(self, location):
+        if self.board.color_at(chess.parse_square(location)):
+            return "white"
+        return "black"
+
     def skipTurn(self):
         """Skips the current players turn."""
         if self.board.turn == chess.WHITE:
@@ -64,7 +70,9 @@ class ChessManager:
             return chess.KNIGHT
         elif pieceChar == "p":
             return chess.PAWN
-        
+
+    def getPieceChar(self, pieceName):
+        return chess.piece_symbol(chess.PIECE_NAMES.index(pieceName))    
     
     def getPieceName(self, pieceInt):
         return chess.piece_name(pieceInt)

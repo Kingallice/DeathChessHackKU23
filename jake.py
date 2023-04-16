@@ -27,8 +27,8 @@ class Jake():
         self.env = (self.screen.get_rect().centery-Meadow.get_height()/2+600, 
                     self.screen.get_rect().centerx-Meadow.get_width()/2, 
                     self.screen.get_rect().centerx+Meadow.get_width()/2)
-        self.p1 = self.get_piece_stats(self.battleData, "attacker")
-        self.p2 = self.get_piece_stats(self.battleData, "defender")
+        self.p1 = self.get_piece_stats(self.battleData, "white")
+        self.p2 = self.get_piece_stats(self.battleData, "black")
     def resetTime(self,nexttime):
         return pygame.time.get_ticks()//1000 + nexttime
     
@@ -94,9 +94,9 @@ class Jake():
             self.p2.player_input2(self.p1)
 
             if self.p1.health <= 0:
-                running = not self.p1.win()
-            elif self.p2.health <= 0:
                 running = not self.p2.win()
+            elif self.p2.health <= 0:
+                running = not self.p1.win()
 
             self.p1.check_l_e()
             self.p2.check_l_e()
