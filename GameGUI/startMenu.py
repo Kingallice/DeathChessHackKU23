@@ -79,6 +79,8 @@ while running:
                             btn.get_rect().width,
                             btn.get_rect().height).collidepoint(mosPos[0], mosPos[1]):
                     if btnMenuText[i] =="Start":
+                            temp = open("./Config/temp.dat", "wb")
+                            temp.close()
                             import GameGUI.Chess_Screen
                     elif btnMenuText[i] == "Settings":
                             settingMenu = True

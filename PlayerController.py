@@ -1,11 +1,15 @@
 import pygame
 class Player(pygame.sprite.Sprite):
-    def __init__(self,image,speed,p_x,p_y,p_gravity,df,sur,health,a_p):
+    def __init__(self,image,speed,p_x,p_y,p_gravity,df,sur,health,a_p,env=("grd","left","right")):
         super().__init__()
+        if p_x > 0:
+            p_x = env[2] - 100
         self.image = pygame.transform.smoothscale(pygame.image.load(image).convert_alpha(), (100, 100))
         self.rect = self.image.get_rect(topleft = (p_x,p_y))
         self.speed = speed
-        self.ground = 595
+        self.ground = env[0]
+        self.left = env[1]
+        self.right = env[2]
         self.gravity = p_gravity
         self.downforce = df
         self.dx = 0
@@ -62,31 +66,33 @@ class Player(pygame.sprite.Sprite):
 
 
     def check_l_e(self):
-        if self.rect.left + self.rect.x < 0:
-            self.rect.x = -self.rect.left
-        if self.rect.right + self.rect.x > 2500:
-            self.rect.x = 2500 - self.rect.right
+        if self.rect.x < self.left:
+            self.rect.x = self.left
+        if self.rect.x > self.right - self.rect.width:
+            self.rect.x = self.right - self.rect.width
+            
 
     def attack_u(self, surface,target):
         attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y - 50, 5, self.rect.height)
         pygame.draw.rect(surface, (255,255,255), attacking_rect)
 
         if attacking_rect.colliderect(target.rect):
-            target.health += self.a_p
+            target.health -= self.a_p
 
     def attack_r(self, surface,target):
         attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y, self.rect.width, self.rect.height)
         pygame.draw.rect(surface, (255,255,255), attacking_rect)
 
         if attacking_rect.colliderect(target.rect):
-            target.health += self.a_p
+            target.health -= self.a_p
 
     def attack_l(self,surface,target):
         attacking_rect = pygame.Rect(self.rect.left - 80, self.rect.y, self.rect.width, self.rect.height)
         pygame.draw.rect(surface, (255, 255, 255), attacking_rect)
 
         if attacking_rect.colliderect(target.rect):
-            target.health += self.a_p
+            target.health -= self.a_p
 
     def win(self):
-        pass
+        file = open("./Config/battleOut.dat", "w+")
+        import GameGUI.Chess_Screen

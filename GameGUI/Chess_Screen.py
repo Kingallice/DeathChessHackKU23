@@ -2,7 +2,6 @@
 #Author: Luke Slizoski
 #This file is the gui for interactions with the board
 
-
 import pygame as pg
 import sys
 import json
@@ -10,7 +9,13 @@ from Chess.chessManager import ChessManager
 
 settings = json.loads(open("./Config/settings.dat", "r").read())
 
+tempData = open("./Config/temp.dat", "r+b")
+tempDataText = tempData.read()
+
 board = ChessManager()
+if len(tempDataText) > 0:
+    board = ChessManager(tempDataText.decode())
+
 bg_color = (0,0,0) #black
 window = pg.display.set_mode(settings["currResolution"])
 if settings["fullscreen"]:
@@ -132,7 +137,12 @@ def clicked_highlighted_square():
         move_list.clear()
 
     if len(move_list) == 2:
+        if board.isLegalMove(move_list[-2] + move_list[-1]) and board.isOccupied(move_list[-1]):
+            tempData = open("./Config/temp.dat", "w+b")
+            tempData.write(board.board.fen().encode())
+            import jake
         move(move_list[-2] + move_list[-1])
+        
         move_list.clear()
 
 def promotion_choice():
