@@ -63,13 +63,6 @@ def highlight_square():
                     square.fill((255,255,0,75))
                     window.blit(square,(x,y))
 
-    if len(move_list) == 2:
-        typeW = board.isWhitePawn(move_list[0])
-        if typeW and move_list[1] == 7:
-            choice = promotion_choice()
-            move_list[-1] += choice
-
-
 def pawn_promo_highlight():
     pos = pg.mouse.get_pos()
     #trying to get pawn promotion square highlight
@@ -147,8 +140,16 @@ def clicked_highlighted_square():
     elif board.isOccupied(first[0] + first[1]) == False and len(move_list)==1:
         move_list.clear()
 
+    #Makes the move
+    choice = ""
     if len(move_list) == 2:
-        if board.isLegalMove(move_list[-2] + move_list[-1]) and board.isOccupied(move_list[-1]):
+        typeP = board.getPieceName(board.getPieceAt(move_list[0]))
+        number = move_list[1]
+        if typeP == 'pawn' and number[1] == '8':
+            choice = promotion_choice()
+            move_list[-1] = move_list[-1] + choice
+
+        if board.isLegalMove(move_list[-2] + move_list[-1]) and board.isOccupied(move_list[-1].replace(choice,"")):
             tempData = open("./Config/temp.dat", "w+b")
             tempData.write(board.board.fen().encode())
             tempData.close()
@@ -170,8 +171,9 @@ def promotion_choice():
     window.blit(scaleImage(RookW, pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2))
     window.blit(scaleImage(BishopW, pieceSize), (window.get_width() / 4 - 225, window.get_height() / 2 + 103.5))
     window.blit(scaleImage(KnightW,pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2 + 103.5))
-    while True:
-        pawn_promo_highlight()
+    return 'q'
+    #while True:
+    #    pawn_promo_highlight()
 
 
 #Makes only valid moves for player
