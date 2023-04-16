@@ -73,22 +73,25 @@ class Player(pygame.sprite.Sprite):
             
 
     def attack_u(self, surface,target):
-        attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y - 50, 5, self.rect.height)
-        pygame.draw.rect(surface, (255,255,255), attacking_rect)
+        sword = pygame.transform.smoothscale(pygame.image.load("Images/Pieces/sword_up.png").convert_alpha(), (100, 100))
+        attacking_rect = sword.get_rect(topleft = (self.rect.centerx - 50, self.rect.y - 45))
+        surface.blit(sword, attacking_rect)
 
         if attacking_rect.colliderect(target.rect):
             target.health -= self.a_p
 
     def attack_r(self, surface,target):
-        attacking_rect = pygame.Rect(self.rect.centerx, self.rect.y, self.rect.width, self.rect.height)
-        pygame.draw.rect(surface, (255,255,255), attacking_rect)
+        sword = pygame.transform.smoothscale(pygame.image.load("Images/Pieces/sword.png").convert_alpha(), (100, 100))
+        attacking_rect = sword.get_rect(topleft=(self.rect.centerx, self.rect.y))
+        surface.blit(sword, attacking_rect)
 
         if attacking_rect.colliderect(target.rect):
             target.health -= self.a_p
 
     def attack_l(self,surface,target):
-        attacking_rect = pygame.Rect(self.rect.left - 80, self.rect.y, self.rect.width, self.rect.height)
-        pygame.draw.rect(surface, (255, 255, 255), attacking_rect)
+        sword = pygame.transform.smoothscale(pygame.image.load("Images/Pieces/sword_left.png").convert_alpha(), (100, 100))
+        attacking_rect = sword.get_rect(topleft=(self.rect.centerx - 90, self.rect.y ))
+        surface.blit(sword, attacking_rect)
 
         if attacking_rect.colliderect(target.rect):
             target.health -= self.a_p
