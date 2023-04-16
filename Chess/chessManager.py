@@ -55,6 +55,9 @@ class ChessManager:
             return chess.KNIGHT
         elif pieceChar == "p":
             return chess.PAWN
+    
+    def getPieceName(self, pieceChar):
+        return chess.piece_name(self.getPieceType(pieceChar))
         
     def getCastleRights(self, color=None):
         if color == chess.WHITE or color == chess.BLACK:
@@ -91,6 +94,10 @@ class ChessManager:
             return True
         else:
             return False
+
+    def getPieceAt(self, location):
+        """Returns the piece at the uci location passed"""
+        return self.board.piece_at(chess.parse_square(location))
 
     def removePiece(self, location):
         """Removes and returns piece at uci location passed"""
