@@ -7,6 +7,7 @@ import sys
 import json
 from jake import Jake
 from Chess.chessManager import ChessManager
+from ExitMenu import *
 
 running = True
 settings = json.loads(open("./Config/settings.dat", "r").read())
@@ -221,6 +222,8 @@ class ChessBoard():
 
     #runs the game
     def start(self):
+        isExitMenu = False
+        menu = ExitMenu()
         running = True
         while running:
             self.window.fill(bg_color)
@@ -228,6 +231,8 @@ class ChessBoard():
             self.update_board(self.board)
             self.highlight_square()
             self.clicked_highlighted_square()
+            if isExitMenu:
+                menu.draw(window)
             pg.display.flip()
 
             temp = getBattleData()
@@ -237,6 +242,19 @@ class ChessBoard():
             for event in pg.event.get():  #event to quit the game
                 if event.type == pg.QUIT:
                     running = False
+
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_ESCAPE:
+                        isExitMenu = True
+
+                elif isExitMenu:
+                    menu.draw(window)
+                    bool = menu.handler(event)
+                    if bool:
+                        isExitMenu = False
+                    elif bool == False:
+                        running = False
+
 
                 elif event.type == pg.MOUSEBUTTONUP: #event to get square/piece coordinates
                     clicked_pos = pg.mouse.get_pos()
