@@ -1,10 +1,10 @@
-Created Students from The University Of Kearney Nebraska:
+Created Students from The University of Nebraska at Kearney:
 
 Luke Slizoski:lslizoski32@gmail.com
 
 Jake Inthavongsa: jinthavongsa1@gmail.com
 
-Noah Mosel:
+Noah Mosel:noahmosel73@gmail.com
 
 Isaac Goff:goffi@opers.unk.edu
 
