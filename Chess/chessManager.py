@@ -86,8 +86,14 @@ class ChessManager:
             return True
         return False
 
-    def isWhite(self,location):
-        if self.board.piece_at(chess.parse_square(location)) == chess.WHITE:
+    def isWhitePawn(self,location):
+        if self.board.piece_at(chess.parse_square(location)) == 'P':
+            return True
+        else:
+            return False
+
+    def isBlackPawn(self, location):
+        if self.board.piece_at(chess.parse_square(location)) == 'p':
             return True
         else:
             return False

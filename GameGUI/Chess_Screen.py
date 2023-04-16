@@ -26,7 +26,6 @@ pg.display.flip()
 letters = ['a','b','c','d','e','f','g','h']
 numbers = ['8','7','6','5','4','3','2','1']
 move_list = []
-print(window.get_height()//2 - 104)
 background = pg.image.load("board.png")
 
 #black images
@@ -64,6 +63,15 @@ def highlight_square():
                     square.fill((255,255,0,75))
                     window.blit(square,(x,y))
 
+    if len(move_list) == 2:
+        typeW = board.isWhitePawn(move_list[0])
+        if typeW and move_list[1] == 7:
+            choice = promotion_choice()
+            move_list[-1] += choice
+
+
+def pawn_promo_highlight():
+    pos = pg.mouse.get_pos()
     #trying to get pawn promotion square highlight
     for x in range(window.get_width()//4 - 255, window.get_width()//4 - 154, 100):
         for y in range(window.get_height()//2, window.get_height()//2 +104, 103):
@@ -151,13 +159,16 @@ def clicked_highlighted_square():
 
 #allows the choice to promote to specfic peices
 def promotion_choice():
-    square3 = pg.Surface((200,206.5))
+    square3 = pg.Surface((200,207))
     square3.fill((255, 255, 255, 75))
     window.blit(square3, (window.get_width()/4 - 225,window.get_height()/2))
     window.blit(scaleImage(QueenW, pieceSize),(window.get_width()/4 - 225, window.get_height()/2))
     window.blit(scaleImage(RookW, pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2))
     window.blit(scaleImage(BishopW, pieceSize), (window.get_width() / 4 - 225, window.get_height() / 2 + 103.5))
     window.blit(scaleImage(KnightW,pieceSize), (window.get_width() / 4 - 125, window.get_height() / 2 + 103.5))
+    while True:
+        pawn_promo_highlight()
+
 
 #Makes only valid moves for player
 def move(uciMove):
@@ -168,7 +179,6 @@ def move(uciMove):
 while True:
     window.fill(bg_color)
     window.blit(background, (window.get_width()/4,yStart))
-    promotion_choice()
     update_board(board)
     highlight_square()
     clicked_highlighted_square()
