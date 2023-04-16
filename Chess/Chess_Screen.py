@@ -235,11 +235,11 @@ class ChessBoard():
             self.update_board(self.board)
             self.highlight_square()
             self.clicked_highlighted_square()
-            if isExitMenu:
-                menu.draw(window)
             if self.board.is_checkmate():
                 winner = Winner(self.board.getTurn())
                 winner.draw(window)
+            if isExitMenu:
+                menu.draw(window)
             pg.display.flip()
 
             temp = getBattleData()
