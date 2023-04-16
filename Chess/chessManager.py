@@ -55,6 +55,7 @@ class ChessManager:
             return chess.KNIGHT
         elif pieceChar == "p":
             return chess.PAWN
+        
     
     def getPieceName(self, pieceChar):
         return chess.piece_name(self.getPieceType(pieceChar))
@@ -103,7 +104,7 @@ class ChessManager:
 
     def getPieceAt(self, location):
         """Returns the piece at the uci location passed"""
-        return self.board.piece_at(chess.parse_square(location))
+        return self.board.piece_type_at(chess.parse_square(location))
 
     def removePiece(self, location):
         """Removes and returns piece at uci location passed"""

@@ -152,6 +152,10 @@ def clicked_highlighted_square():
             tempData = open("./Config/temp.dat", "w+b")
             tempData.write(board.board.fen().encode())
             tempData.close()
+            conflict = {"attacker": {"pos": move_list[-2], "type": board.getPieceAt(move_list[-2])}}
+            print(conflict)
+            tempData = open("./Config/toBattle.dat", "w+b")
+            json.dump(tempData)
             import jake
         move(move_list[-2] + move_list[-1])
         
