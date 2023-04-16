@@ -8,6 +8,7 @@ from Combat.jake import Jake
 from Chess.chessManager import ChessManager
 from GameGUI.ExitMenu import *
 from GameGUI.Winner import *
+from GameGUI.Draw import *
 running = True
 
 bg_color = (0,0,0) #black
@@ -238,6 +239,10 @@ class ChessBoard():
             if self.board.is_checkmate():
                 winner = Winner(self.board.getTurn())
                 winner.draw(window)
+            if self.board.is_draw():
+                draw = Draw()
+                draw.draw(window)
+
             if isExitMenu:
                 menu.draw(window)
             pg.display.flip()

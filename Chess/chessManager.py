@@ -134,3 +134,7 @@ class ChessManager:
     def is_checkmate(self):
         if self.board.is_checkmate():
             return True
+
+    def is_draw(self):
+        if self.board.is_variant_draw():
+            return True
