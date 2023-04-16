@@ -13,6 +13,8 @@ settings["fullscreen"] = True
 settings["currResolution"] = (1280, 720)
 settings["displayNum"] = 0
 
+if not os.path.isdir("./Config"):
+    os.mkdir("./Config")
 if os.path.isfile("./Config/settings.dat"):
     settingsFile = open("./Config/settings.dat", 'r+')
 else:
