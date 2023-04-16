@@ -1,4 +1,3 @@
-import chess
 #AUTHOR -Isaac Goff
 import pygame
 
