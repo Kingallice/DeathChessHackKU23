@@ -57,8 +57,8 @@ class ChessManager:
             return chess.PAWN
         
     
-    def getPieceName(self, pieceChar):
-        return chess.piece_name(self.getPieceType(pieceChar))
+    def getPieceName(self, pieceInt):
+        return chess.piece_name(pieceInt)
         
     def getCastleRights(self, color=None):
         if color == chess.WHITE or color == chess.BLACK:
