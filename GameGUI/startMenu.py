@@ -23,7 +23,6 @@ else:
 settingsFileData = settingsFile.read()
 if len(settingsFileData) > 0:
     settings = json.loads(settingsFileData)
-    print("JSON", settings)
 else:
     json.dump(settings, settingsFile)
 settingsFile.close()

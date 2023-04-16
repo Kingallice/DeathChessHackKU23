@@ -10,7 +10,6 @@ from Chess.chessManager import ChessManager
 from GameGUI.ExitMenu import *
 
 running = True
-settings = json.loads(open("./Config/settings.dat", "r").read())
 
 bg_color = (0,0,0) #black
 
@@ -61,6 +60,7 @@ def getBattleData():
 
 class ChessBoard():
     def __init__(self) -> None:
+        settings = json.loads(open("./Config/settings.dat", "r").read())
         tempData = open("./Config/temp.dat", "w+b")
         self.board = ChessManager()
         if len(openTempData()) > 0:
@@ -182,7 +182,6 @@ class ChessBoard():
                 tempData = open("./Config/battle.dat", "w+")
                 json.dump(conflict,tempData)
                 tempData.close()
-                running = False
                 running = Jake().start()
                 
             self.move(move_list[-2] + move_list[-1])
@@ -243,16 +242,13 @@ class ChessBoard():
 
             temp = getBattleData()
             if temp:
-                print(temp)
                 if "winner" in temp.keys():
                     if temp["winner"] == temp["attacker"]:
-                        print("attacker")
                         self.board.setPiece(temp[temp["defender"]]["pos"],
                                             self.board.getPieceChar(temp[temp["attacker"]]["piece"][1:]),
                                             self.board.getColor(temp["attacker"]))
                         self.board.removePiece(temp[temp["attacker"]]["pos"])
                     elif temp["winner"] == temp["defender"]:
-                        print("defender")
                         self.board.setPiece(temp[temp["defender"]]["pos"],
                                             self.board.getPieceChar(temp[temp["defender"]]["piece"][1:]),
                                             self.board.getColor(temp["defender"]))
