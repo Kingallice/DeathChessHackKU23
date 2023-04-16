@@ -70,7 +70,7 @@ class Jake():
                 elif (self.p1.health/self.p1.max_health) < (self.p2.health/self.p2.max_health):
                     running = not self.p2.win()
                 else:
-                    start_time = self.resetTime(overTime)
+                    self.start_time = self.resetTime(overTime)
                     
 
             infoHeight = self.screen.get_rect().centery-Meadow.get_height()/2 + 30
