@@ -1,5 +1,4 @@
 #Date: 4-14-23
-#Author: Luke Slizoski
 #This file is the gui for interactions with the board
 
 import pygame as pg
@@ -8,7 +7,7 @@ import json
 from Combat.jake import Jake
 from Chess.chessManager import ChessManager
 from GameGUI.ExitMenu import *
-
+from GameGUI.Winner import *
 running = True
 
 bg_color = (0,0,0) #black
@@ -238,6 +237,9 @@ class ChessBoard():
             self.clicked_highlighted_square()
             if isExitMenu:
                 menu.draw(window)
+            if self.board.is_checkmate():
+                winner = Winner(self.board.getTurn())
+                winner.draw(window)
             pg.display.flip()
 
             temp = getBattleData()
