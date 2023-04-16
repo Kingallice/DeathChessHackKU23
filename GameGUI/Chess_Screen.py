@@ -71,14 +71,8 @@ def highlight_square():
                 if pos[1] > y and pos[1] < y + 103 + 0.5:
                     square = pg.Surface((100, 103 + 0.5), pg.SRCALPHA)
                     square.fill((255, 255, 0, 75))
-                    window.blit(square, (x, y))
-"""             
-    if pos[0] > window.get_width()/4 - 255 and pos[0] < window.get_width()/4 -155:
-        if pos[1] > window.get_height()/2 and pos[1] < window.get_height()/2 - 103.5:
-            square = pg.Surface((100, 103.5), pg.SRCALPHA)
-            square.fill((255, 255, 0, 75))
-            window.blit(square, (window.get_width()/4 - 255, window.get_height()/2))
-"""
+                    window.blit(square, (x+28, y))
+
 #updates the pieces on the board
 def update_board(board):
     state = board.getFen()
@@ -149,6 +143,7 @@ def clicked_highlighted_square():
         if board.isLegalMove(move_list[-2] + move_list[-1]) and board.isOccupied(move_list[-1]):
             tempData = open("./Config/temp.dat", "w+b")
             tempData.write(board.board.fen().encode())
+            tempData.close()
             import jake
         move(move_list[-2] + move_list[-1])
         
