@@ -5,9 +5,9 @@
 import pygame as pg
 import sys
 import json
-from jake import Jake
+from Combat.jake import Jake
 from Chess.chessManager import ChessManager
-from ExitMenu import *
+from GameGUI.ExitMenu import *
 
 running = True
 settings = json.loads(open("./Config/settings.dat", "r").read())
@@ -17,7 +17,7 @@ bg_color = (0,0,0) #black
 letters = ['a','b','c','d','e','f','g','h']
 numbers = ['8','7','6','5','4','3','2','1']
 move_list = []
-background = pg.image.load("board.png")
+background = pg.image.load("Images/board.png")
 
 pieceSize = (100, 100)
 #black images

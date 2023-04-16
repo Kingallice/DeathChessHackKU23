@@ -1,7 +1,7 @@
 import pygame
-import PlayerController
+import Combat.PlayerController as PlayerController
 from sys import exit
-import Piece
+import Chess.Piece as Piece
 import json
 
 pygame.init()

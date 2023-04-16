@@ -1,7 +1,7 @@
 import pygame
 import json
 import os
-from GameGUI.Chess_Screen import ChessBoard
+from Chess.Chess_Screen import ChessBoard
 
 btnYStart = 0
 btnPadding = 10
